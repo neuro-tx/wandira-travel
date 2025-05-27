@@ -9,13 +9,15 @@ const {
   deleteTrip,
 } = require("../controller/trip.controller");
 
-tripRouter.route("/")
+tripRouter
+  .route("/")
   .get(getAllTrips)
   .post(validateTrip, addTrip);
 
-tripRouter.route("/:id")
+tripRouter
+  .route("/:id")
   .get(getTripById)
   .patch(updateTrip)
-  .delete(deleteTrip)
+  .delete(deleteTrip);
 
 module.exports = tripRouter;

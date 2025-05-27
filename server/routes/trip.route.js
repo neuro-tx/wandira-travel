@@ -8,16 +8,18 @@ const {
   updateTrip,
   deleteTrip,
 } = require("../controller/trip.controller");
+const protected = require("../middleware/protectedRoutes");
+const authorization = require("../middleware/auth");
 
 tripRouter
   .route("/")
   .get(getAllTrips)
-  .post(validateTrip, addTrip);
+  .post(validateTrip,authorization ,protected ,addTrip);
 
 tripRouter
   .route("/:id")
-  .get(getTripById)
-  .patch(updateTrip)
-  .delete(deleteTrip);
+  .get(authorization ,getTripById)
+  .patch(authorization,protected ,updateTrip)
+  .delete(authorization,protected ,deleteTrip);
 
 module.exports = tripRouter;

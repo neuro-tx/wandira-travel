@@ -1,5 +1,4 @@
 const asyncWrapper = require("../middleware/asyncWrapper");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../model/user.model");
 const dataform = require("../utils/dataForm");
@@ -79,7 +78,7 @@ const login = asyncWrapper(async (req, res) => {
   if (!checkUser) {
     return res.status(404).json(dataform("faild", 404, "invalid email"));
   }
-
+  
   const pwdComapre = await bcrypt.compare(password, checkUser.password);
   if (!pwdComapre) {
     return res.status(400).json(dataform("faild", 400, "invalid password"));
@@ -113,7 +112,6 @@ const login = asyncWrapper(async (req, res) => {
       last_name: checkUser.last_name,
       email: checkUser.email,
       phone: checkUser.phone,
-      role: checkUser.role,
       gender: checkUser.gender,
       image: checkUser.image,
       birth_day: checkUser.birth_day,

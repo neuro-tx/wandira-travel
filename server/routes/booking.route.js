@@ -8,15 +8,19 @@ const {
 } = require("../controller/booking.controller");
 const bookingRouter = express.Router();
 const validateBooking = require("../middleware/validationBooking");
+const protected = require("../middleware/protectedRoutes");
+const authorization = require("../middleware/auth");
 
-bookingRouter.route("/")
-  .get(getAllBookings)
-  .post(validateBooking ,addBooking);
+bookingRouter
+  .route("/")
+  .get(authorization, protected, getAllBookings)
+  .post(validateBooking, authorization, addBooking);
 
+bookingRouter.use(authorization, protected);
 bookingRouter
   .route("/:id")
   .get(getBookingById)
-  .put(validateBooking ,updateBook)
+  .put(validateBooking, updateBook)
   .delete(deleteBook);
 
 module.exports = bookingRouter;

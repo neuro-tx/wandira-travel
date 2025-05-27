@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const userRouter = require("./routes/user.route");
 const handler = require("./middleware/errorHandler");
 const tripRouter = require("./routes/trip.route");
+const bookingRouter = require("./routes/booking.route");
 
 const app = express();
 
@@ -17,8 +18,9 @@ app.use(cookieParser());
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/trip", tripRouter);
+app.use("/api/v1/booking", bookingRouter);
 
-app.use(handler)
+app.use(handler);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server run in port:${process.env.PORT}`);

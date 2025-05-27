@@ -16,8 +16,8 @@ const addTrip = asyncWrapper(async (req, res) => {
   const newTrip = await Trip.create(req.body);
   if (!newTrip) {
     res
-      .status(404)
-      .json(dataform("faild", 4000, "falid to add trip ,try again"));
+      .status(400)
+      .json(dataform("faild", 400, "falid to add trip ,try again"));
   }
   return res
     .status(201)
@@ -25,7 +25,7 @@ const addTrip = asyncWrapper(async (req, res) => {
 });
 
 const getTripById = asyncWrapper(async (req, res) => {
-  const trips = await Trip.findById(req.params.id)
+  const trips = await Trip.findById(req.params.id);
   if (!trips) res.status(404).json(dataform("faild", 404, "invalid trip id"));
 
   res
@@ -56,5 +56,5 @@ module.exports = {
   addTrip,
   getTripById,
   updateTrip,
-  deleteTrip
+  deleteTrip,
 };

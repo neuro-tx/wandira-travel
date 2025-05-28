@@ -3,6 +3,8 @@ const cors = require("cors");
 require("dotenv").config();
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 // export routes
 const userRouter = require("./routes/user.route");
@@ -13,16 +15,26 @@ const authRouter = require("./routes/auth.route");
 const refreshRoute = require("./routes/refresh.route");
 
 const app = express();
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: "Too many requests, please try again later after 15 min.",
+});
 
+app.set("trust proxy", 1);
+
+app.use(helmet());
+app.use(limiter);
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/trip", tripRouter);
 app.use("/api/v1/booking", bookingRouter);
-app.use("/api/refresh" ,refreshRoute)
+app.use("/api/refresh", refreshRoute);
 
 app.use(handler);
 

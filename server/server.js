@@ -10,6 +10,7 @@ const handler = require("./middleware/errorHandler");
 const tripRouter = require("./routes/trip.route");
 const bookingRouter = require("./routes/booking.route");
 const authRouter = require("./routes/auth.route");
+const refreshRoute = require("./routes/refresh.route");
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use("/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/trip", tripRouter);
 app.use("/api/v1/booking", bookingRouter);
+app.use("/api/refresh" ,refreshRoute)
 
 app.use(handler);
 

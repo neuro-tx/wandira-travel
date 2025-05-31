@@ -1,5 +1,57 @@
-@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Recursive:wght@300..1000&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Recursive:wght@300..1000&display=swap");
 
 @import "tailwindcss";
 
+@theme {
+  --font-karla: "Karla", sans-serif;
+  --font-recursive: "Recursive", sans-serif;
+
+  --color-dark-100: #1f1f36;
+  --color-dark-200: #33255c;
+  --color-dark-300: #2e2c48;
+  --color-dark-400: #262643;
+
+  --color-primary-50: #e9f3fb;
+  --color-primary-100: #256ff1;
+  --color-primary-200: #8125f1;
+  --color-primary-300: #6941c6;
+  --color-primary-400: #5f19b3;
+
+  --color-ligh-100: #f9fbfc;
+  --color-ligh-200: #7f7e83;
+
+  --color-red-50: #fff1f3;
+  --color-red-100: #c01048;
+  --color-red-200: #b93815;
+  --color-red-300: #ff543d;
+
+  --color-pink-50: #f7edf6;
+  --color-pink-500: #c11574;
+  --color-green-50: #ecfdf3;
+  --color-green-500: #027a48;
+  --color-navy-50: #f0f9ff;
+  --color-navy-500: #026aa2;
+
+  --shadow-100: 0px 1px 3px 0px rgba(16, 24, 40, 0.1),
+    0px 1px 2px 0px rgba(16, 24, 40, 0.06);
+  --shadow-200: 0px 12px 16px -4px rgba(16, 24, 40, 0.1),
+    0px 4px 20px -2px rgba(16, 24, 40, 0.2);
+  --shadow-300: 0px 2px 30px 0px rgba(0, 0, 0, 0.05);
+  --shadow-400: 0px 2px 6px 0px rgba(13, 10, 44, 0.08);
+  --shadow-500: 0px 12px 16px -4px rgba(16, 24, 40, 0.1);
+}
+
+@layer utilities {
+  .my-gradient {
+    @apply bg-gradient-to-r from-dark-400 via-primary-300 to-primary-200 uppercase font-bold text-transparent bg-clip-text;
+  }
+
+  .flex-center {
+    @apply flex items-center;
+  }
+
+  .special {
+    @apply font-recursive;
+    font-feature-settings: "ss01" on, "calt" on;
+  }
+}

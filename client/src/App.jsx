@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
+import { RouterProvider } from 'react-router';
+
+import router from './routes';
 
 const App = () => {
-  return (
-    <div>
-      Wandira-travel
-    </div>
-  )
-}
+  return <RouterProvider router={router} />;
+};
 
-export default App
+export default App;
+

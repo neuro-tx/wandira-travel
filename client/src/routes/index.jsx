@@ -14,7 +14,7 @@ import CreatTrip from '../pages/admin/CreatTrip';
 import AllUsers from '../pages/admin/AllUsers';
 import About from '../pages/user/About';
 import Contact from '../pages/user/Contact';
-
+import AdminProvider from '../contexts/admin/AdminProvider';
 
 const router = createBrowserRouter([
     {
@@ -32,7 +32,9 @@ const router = createBrowserRouter([
     },
     {
         path: 'admin',
-        element: <AdminLayout />,
+        element: <AdminProvider>
+            <AdminLayout />
+        </AdminProvider>,
         children: [
             { index: true, element: <Dashboard /> },
             { path: 'dashboard', element: <Dashboard /> },

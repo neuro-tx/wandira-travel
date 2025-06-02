@@ -5,25 +5,25 @@ export const sidebarIcon = [
     id: 1,
     icon: LayoutDashboard,
     label: "Dashboard",
-    href: "/dashboard",
+    href: "/admin/dashboard",
   },
   {
-    id: 1,
+    id: 2,
     icon: Map,
     label: "All Trips",
-    href: "/trips",
+    href: "/admin/trips",
   },
   {
     id: 3,
     icon: UsersRound,
     label: "All Users",
-    href: "/all-users",
+    href: "/admin/all-users",
   },
   {
     id: 4,
     icon: MapPlus,
     label: "Generate Trips",
-    href: "/create-trip",
+    href: "/admin/create-trip",
   },
 ];
 

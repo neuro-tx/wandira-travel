@@ -1,0 +1,35 @@
+import React, { createContext, useContext } from 'react'
+import { useState } from 'react';
+
+const userContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+    const udata = {
+        name: "tarek fawzy",
+        email: "tarek@gmail.com",
+        img: "/assets/images/michael.webp",
+        role: "admin"
+    }
+    const [user, setuser] = useState(udata);
+
+    const login = (data) => {
+        setuser(data);
+    }
+    const logout = () => {
+        setuser(null);
+    }
+
+    return (
+        <userContext.Provider value={{ user, setuser, login, logout }}>
+            {children}
+        </userContext.Provider>
+    )
+}
+
+export const useAuth = () => {
+    const context = useContext(userContext);
+    if (!context) {
+        throw new Error("there is no auth context");
+    }
+    return context;
+};

@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState } from 'react';
 const UiContext = createContext();
 
 export const InterfaceProvider = ({ children }) => {
-  const [sideBar, setSidebar] = useState(true);
+  const [sideBar, setSidebar] = useState(false);
 
   return (
     <UiContext.Provider value={{ sideBar, setSidebar }}>

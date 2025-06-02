@@ -1,18 +1,56 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, NavLink } from 'react-router';
 import { sidebarIcon } from '../constants/links';
 import { cn } from "../utils/util";
 import { useAuth } from '../contexts/shared/Auth';
 import { LogOut } from 'lucide-react';
+import { useInterface } from '../contexts/admin/InterfaceContext';
 
 const SideBar = () => {
   const { user, logout } = useAuth();
+  const sideBarRef = useRef(null);
+  const { sideBar, setSidebar } = useInterface();
+
+  useEffect(() => {
+    const handleClickOut = (e) => {
+      if (sideBar && sideBarRef.current && !sideBarRef.current.contains(e.target)) {
+        setSidebar(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOut);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOut);
+    }
+  }, [sideBar])
+
+  useEffect(() => {
+    const mediaChange = window.matchMedia("(max-width :769px)");
+
+    const handleChange = (e) => {
+      setSidebar(false)
+    };
+
+    mediaChange.addEventListener("change", handleChange);
+    return () => {
+      mediaChange.removeEventListener("change", handleChange);
+    }
+  }, [])
+
+  const toggleSidebar = () => {
+    setSidebar((prev) => !prev);
+  }
+
   return (
-    <aside className='h-full w-64 bg-white duration-2 flex flex-col justify-between'>
+    <aside
+      ref={sideBarRef}
+      className='h-full w-56 lg:w-64 bg-white duration-2 flex flex-col justify-between'
+    >
       <div className="p-3 border-b border-ligh-50">
         <Link
           to="/admin/dashboard"
-          className="flex items-center gap-1.5 py-0.5"
+          className="flex items-center gap-1.5 py-0.5 select-none"
         >
           <img
             src="/assets/images/logo.svg"
@@ -41,6 +79,7 @@ const SideBar = () => {
                       }
                     )
                   }
+                  onClick={toggleSidebar}
                 >
                   {<link.icon size={19} />}
                   <span>{link.label}</span>

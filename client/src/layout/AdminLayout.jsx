@@ -13,7 +13,7 @@ const AdminLayout = () => {
 
     // check if the user is admin or not
     // if not show not found page
-    if (!user || user.role !== "admin") {
+    if (!user || user.role !== "admin" || !user.role) {
         return <NotFound />
     }
 

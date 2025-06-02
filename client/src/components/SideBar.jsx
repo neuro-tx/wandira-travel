@@ -38,10 +38,6 @@ const SideBar = () => {
     }
   }, [])
 
-  const toggleSidebar = () => {
-    setSidebar((prev) => !prev);
-  }
-
   return (
     <aside
       ref={sideBarRef}
@@ -79,7 +75,7 @@ const SideBar = () => {
                       }
                     )
                   }
-                  onClick={toggleSidebar}
+                  onClick={() => setSidebar(false)}
                 >
                   {<link.icon size={19} />}
                   <span>{link.label}</span>

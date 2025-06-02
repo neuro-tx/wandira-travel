@@ -6,7 +6,7 @@ const {
   updateUserData,
   deleteUser,
 } = require("../controller/user.controller");
-const validateUser = require("../middleware/validationUser");
+const {validateUser} = require("../middleware/validationUser");
 const userRouter = express.Router();
 const protected = require("../middleware/protectedRoutes");
 const authorization = require("../middleware/auth");

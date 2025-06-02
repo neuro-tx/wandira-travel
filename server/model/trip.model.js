@@ -60,14 +60,14 @@ const tripSchema = new mongoose.Schema(
     bestTimeToVisit: {
       type: [String],
       required: [true, "Best time to visit is required"],
-      enum: {
-        values: ["Spring", "Summer", "Fall", "Winter"],
-        message: "{VALUE} is not a valid season",
-      },
-      validate: {
-        validator: (arr) => Array.isArray(arr) && arr.length > 0,
-        message: "Best time to visit must have at least one season",
-      },
+      // enum: {
+      //   values: ["Spring", "Summer", "Fall", "Winter"],
+      //   message: "{VALUE} is not a valid season",
+      // },
+      // validate: {
+      //   validator: (arr) => Array.isArray(arr) && arr.length > 0,
+      //   message: "Best time to visit must have at least one season",
+      // },
     },
     images: {
       type: [String],

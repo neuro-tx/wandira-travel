@@ -27,9 +27,20 @@ const userValidationSchema = Joi.object({
 
   gender: Joi.string().valid("male", "female").default("male"),
 
-  trips: Joi.array()
-    .items(Joi.string().hex().length(24))
-    .optional(),
+  trips: Joi.array().items(Joi.string().hex().length(24)).optional(),
 });
 
-module.exports = userValidationSchema;
+const loginValidationSchema = Joi.object({
+  email: Joi.string()
+    .email()
+    .min(5)
+    .required()
+    .messages({ "any.required": "email is required" }),
+
+  password: Joi.string()
+    .min(5)
+    .required()
+    .messages({ "any.required": "password is required" }),
+});
+
+module.exports = { userValidationSchema, loginValidationSchema };

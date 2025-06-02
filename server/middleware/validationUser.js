@@ -1,4 +1,7 @@
-const userValidationSchema = require("../utils/userValidation");
+const {
+  userValidationSchema,
+  loginValidationSchema,
+} = require("../utils/userValidation");
 
 const validateUser = (req, res, next) => {
   const { error } = userValidationSchema.validate(req.body);
@@ -11,4 +14,16 @@ const validateUser = (req, res, next) => {
   next();
 };
 
-module.exports = validateUser;
+const validateLogin = (req, res, next) => {
+  const { error } = loginValidationSchema.validate(req.body);
+
+  if (error) {
+    return res.status(400).json({
+      status: "failed",
+      message: error.details[0].message,
+    });
+  }
+  next();
+};
+
+module.exports = { validateUser, validateLogin };

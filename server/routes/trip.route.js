@@ -14,12 +14,12 @@ const authorization = require("../middleware/auth");
 tripRouter
   .route("/")
   .get(getAllTrips)
-  .post(validateTrip,authorization ,protected ,addTrip);
+  .post(authorization, protected, validateTrip, addTrip);
 
 tripRouter
   .route("/:id")
-  .get(authorization ,getTripById)
-  .patch(authorization,protected ,updateTrip)
-  .delete(authorization,protected ,deleteTrip);
+  .get(authorization, getTripById)
+  .patch(authorization, protected, updateTrip)
+  .delete(authorization, protected, deleteTrip);
 
 module.exports = tripRouter;

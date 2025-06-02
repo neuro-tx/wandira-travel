@@ -14,7 +14,7 @@ const authorization = require("../middleware/auth");
 bookingRouter
   .route("/")
   .get(authorization, protected, getAllBookings)
-  .post(validateBooking, authorization, addBooking);
+  .post(authorization, validateBooking, addBooking);
 
 bookingRouter.use(authorization, protected);
 bookingRouter

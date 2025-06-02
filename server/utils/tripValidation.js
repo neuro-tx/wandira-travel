@@ -25,12 +25,11 @@ const tripValidationSchema = Joi.object({
   duration: Joi.string().trim().required(),
 
   bestTimeToVisit: Joi.array()
-    .items(Joi.string().valid("Spring", "Summer", "Fall", "Winter"))
+    .items(Joi.string().trim().required())
     .min(1)
-    .required()
     .messages({
-      "any.only": "Invalid season in bestTimeToVisit",
-      "array.min": "At least one season is required",
+      "array.min": "At least one season/time is required",
+      "string.empty": "Season/time cannot be empty",
     }),
 
   images: Joi.array()

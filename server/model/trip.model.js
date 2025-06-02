@@ -1,5 +1,38 @@
 const mongoose = require("mongoose");
 
+const ActivitySchema = new mongoose.Schema({
+  time: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  description: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+});
+
+const DaySchema = new mongoose.Schema({
+  day: {
+    type: Number,
+    required: true,
+    min: [1, "Day number must be at least 1"],
+  },
+  location: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  activities: {
+    type: [ActivitySchema],
+    validate: {
+      validator: (arr) => Array.isArray(arr) && arr.length > 0,
+      message: "Each day must have at least one activity",
+    },
+  },
+});
+
 const tripSchema = new mongoose.Schema(
   {
     title: {
@@ -16,13 +49,7 @@ const tripSchema = new mongoose.Schema(
     },
     price: {
       type: Number,
-      required: [true, "Price is required"],
       min: [100, "Minimum price is 100"],
-    },
-    seats: {
-      type: Number,
-      required: [true, "Seats count is required"],
-      min: [50, "Minimum number of seats is 50"],
     },
     duration: {
       type: String,
@@ -31,13 +58,16 @@ const tripSchema = new mongoose.Schema(
       default: "3 days",
     },
     bestTimeToVisit: {
-      type: String,
+      type: [String],
       required: [true, "Best time to visit is required"],
       enum: {
         values: ["Spring", "Summer", "Fall", "Winter"],
         message: "{VALUE} is not a valid season",
       },
-      trim: true,
+      validate: {
+        validator: (arr) => Array.isArray(arr) && arr.length > 0,
+        message: "Best time to visit must have at least one season",
+      },
     },
     images: {
       type: [String],
@@ -63,9 +93,48 @@ const tripSchema = new mongoose.Schema(
     interests: {
       type: [String],
       required: [true, "At least one interest is required"],
+      enum: {
+        values: [
+          "Food & Culinary",
+          "Historical Sites",
+          "Hiking & Nature Walks",
+          "Beaches & Water Activities",
+          "Museums & Art",
+          "Nightlife & Bars",
+          "Photography Spots",
+          "Shopping",
+          "Local Experiences",
+        ],
+        message: "{VALUE} is not a valid interest",
+      },
       validate: {
-        validator: (arr) => arr.length > 0,
+        validator: (arr) => Array.isArray(arr) && arr.length > 0,
         message: "Interests cannot be empty",
+      },
+    },
+    travelStyles: {
+      type: String,
+      enum: [
+        "Relaxed",
+        "Luxury",
+        "Adventure",
+        "Cultural",
+        "Nature & Outdoors",
+        "City Exploration",
+      ],
+      required: [true, "Travel style is required"],
+      trim: true,
+    },
+    groupTypes: {
+      type: String,
+      enum: ["Solo", "Couple", "Family", "Friends", "Business"],
+      required: [true, "group types is required"],
+    },
+    itinerary: {
+      type: [DaySchema],
+      validate: {
+        validator: (arr) => Array.isArray(arr) && arr.length > 0,
+        message: "Itinerary must have at least one day",
       },
     },
   },
@@ -75,7 +144,7 @@ const tripSchema = new mongoose.Schema(
   }
 );
 
-// auto calculate the tripDay by the Duration
+// Auto-calculate `trip_day` if not set, based on `duration`
 tripSchema.pre("save", function (next) {
   if (!this.trip_day && this.duration) {
     const match = this.duration.match(/(\d+)/);
@@ -85,6 +154,20 @@ tripSchema.pre("save", function (next) {
       this.trip_day = new Date(today.setDate(today.getDate() + days));
     }
   }
+
+  // Auto-calculate price based on groupTypes
+  const basePrice = 200;
+  const groupMultipliers = {
+    Solo: 1,
+    Couple: 2,
+    Family: 4,
+    Friends: 3,
+    Business: 5,
+  };
+
+  const multiplier = groupMultipliers[this.groupTypes] || 1;
+  this.price = basePrice * multiplier;
+
   next();
 });
 

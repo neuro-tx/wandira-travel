@@ -2,14 +2,9 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
-    first_name: {
+    name: {
       type: String,
-      required: [true, "First name is required"],
-      trim: true,
-    },
-    last_name: {
-      type: String,
-      required: [true, "Last name is required"],
+      required: [true, "name is required"],
       trim: true,
     },
     email: {
@@ -38,11 +33,6 @@ const userSchema = new mongoose.Schema(
       enum: ["admin", "user"],
       default: "user",
     },
-    phone: {
-      type: String,
-      minlength: [11, "Phone number must be at least 11 characters"],
-      trim: true,
-    },
     gender: {
       type: String,
       enum: ["male", "female"],
@@ -54,6 +44,12 @@ const userSchema = new mongoose.Schema(
         ref: "Trip",
       },
     ],
+    booking: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Booking",
+      },
+    ]
   },
   {
     timestamps: true,

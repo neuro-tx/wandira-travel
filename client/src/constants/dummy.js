@@ -1,7 +1,7 @@
 export const trips = [
   {
     id: 1,
-    name: "Cultural Escape in Paris: Art, History & Romance",
+    title: "Cultural Escape in Paris: Art, History & Romance",
     description:
       "Discover the heart of French culture with a romantic 4-day journey through Paris. Explore world-class museums, historical landmarks, and fine dining in the city of love.",
     estimatedPrice: "$1200",
@@ -17,9 +17,7 @@ export const trips = [
       "🍁 Fall (September to November): Fewer crowds and beautiful autumn foliage",
       "❄️ Winter (December to February): Cozy atmosphere with festive decorations and quiet museums",
     ],
-    location: {
-      city: "Paris",
-    },
+    location: "Paris",
     itinerary: [
       {
         day: 1,
@@ -106,7 +104,7 @@ export const trips = [
   },
   {
     id: 2,
-    name: "Ancient Wonders of Egypt: A Solo Historical Journey",
+    title: "Ancient Wonders of Egypt: A Solo Historical Journey",
     description:
       "Explore the rich history of Egypt on a budget-friendly 4-day solo adventure through Cairo and Giza. Visit iconic monuments, fascinating museums, and experience authentic local culture.",
     estimatedPrice: "$500",
@@ -122,9 +120,7 @@ export const trips = [
       "🍁 Fall (September to November): Comfortable climate and ideal for historical site tours",
       "❄️ Winter (December to February): Cool and dry, perfect for visiting the pyramids and museums",
     ],
-    location: {
-      city: "Cairo & Giza",
-    },
+    location: "Cairo & Giza",
     itinerary: [
       {
         day: 1,
@@ -209,7 +205,7 @@ export const trips = [
   },
   {
     id: 3,
-    name: "Romantic Art & Culture Getaway in Italy",
+    title: "Romantic Art & Culture Getaway in Italy",
     description:
       "Discover the romance and rich artistic heritage of Italy with your partner on this 4-day cultural journey through Rome and Florence, featuring iconic museums and timeless landmarks.",
     estimatedPrice: "$1,200",
@@ -225,9 +221,7 @@ export const trips = [
       "🍁 Fall (September to October): Pleasant temperatures and beautiful autumn colors",
       "❄️ Winter (December to February): Cozy vibes and quiet museums, ideal for art lovers",
     ],
-    location: {
-      city: "Rome & Florence",
-    },
+    location: "Rome & Florence",
     itinerary: [
       {
         day: 1,
@@ -316,7 +310,7 @@ export const trips = [
   },
   {
     id: 4,
-    name: "Cultural Treasures of Japan: Art & Tradition in Tokyo and Kyoto",
+    title: "Cultural Treasures of Japan: Art & Tradition in Tokyo and Kyoto",
     description:
       "Immerse yourself in Japan’s vibrant blend of ancient tradition and modern art with this 4-day cultural tour through Tokyo and Kyoto, designed for couples seeking inspiration.",
     estimatedPrice: "$1,400",
@@ -332,9 +326,7 @@ export const trips = [
       "🍁 Fall (September to November): Stunning autumn foliage and temple illumination",
       "❄️ Winter (December to February): Peaceful temples, hot springs, and snowy scenery",
     ],
-    location: {
-      city: "Tokyo & Kyoto",
-    },
+    location: "Tokyo & Kyoto",
     itinerary: [
       {
         day: 1,
@@ -419,3 +411,55 @@ export const trips = [
     ],
   },
 ];
+
+const sampleTrip = {
+  title: "Cultural Escape in Paris: Art, History & Romance",
+  description:
+    "Discover the heart of French culture with a romantic 4-day journey through Paris. Explore world-class museums, historical landmarks, and fine dining in the city of love.",
+  duration: "4 days",
+  bestTimeToVisit: ["Spring", "Summer", "Fall", "Winter"],
+  images: ["https://example.com/image1.jpg", "https://example.com/image2.jpg"],
+  location: "Paris",
+  country: "France",
+  interests: ["Museums & Art"],
+  travelStyles: "Cultural",
+  groupTypes: "Couple",
+  itinerary: [
+    {
+      day: 1,
+      location: "Paris",
+      activities: [
+        { time: "Morning", description: "Visit the Eiffel Tower" },
+        { time: "Afternoon", description: "Explore Musée d'Orsay" },
+        { time: "Evening", description: "Dinner cruise on the Seine" },
+      ],
+    },
+    {
+      day: 2,
+      location: "Paris",
+      activities: [
+        { time: "Morning", description: "Visit the Louvre Museum" },
+        { time: "Afternoon", description: "Stroll in the Tuileries Garden" },
+        { time: "Evening", description: "Attend an opera performance" },
+      ],
+    },
+    {
+      day: 3,
+      location: "Montmartre",
+      activities: [
+        { time: "Morning", description: "Walk Montmartre streets" },
+        { time: "Afternoon", description: "Visit Dali Museum" },
+        { time: "Evening", description: "Dine in a French bistro" },
+      ],
+    },
+    {
+      day: 4,
+      location: "Versailles",
+      activities: [
+        { time: "Morning", description: "Tour the Palace of Versailles" },
+        { time: "Afternoon", description: "Picnic in palace gardens" },
+        { time: "Evening", description: "Return to Paris and dine by Seine" },
+      ],
+    },
+  ],
+};

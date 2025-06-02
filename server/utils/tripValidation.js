@@ -1,72 +1,79 @@
 const Joi = require("joi");
 
+const activitySchema = Joi.object({
+  time: Joi.string().trim().required(),
+  description: Joi.string().trim().required(),
+});
+
+const daySchema = Joi.object({
+  day: Joi.number().min(1).required(),
+  location: Joi.string().trim().required(),
+  activities: Joi.array().items(activitySchema).min(1).required(),
+});
+
 const tripValidationSchema = Joi.object({
   title: Joi.string().trim().min(10).required().messages({
-    "string.base": "Title must be a string",
-    "string.empty": "Title is required",
     "string.min": "Title must be at least 10 characters",
+    "any.required": "Trip title is required",
   }),
 
   description: Joi.string().trim().min(40).required().messages({
-    "string.base": "Description must be a string",
-    "string.empty": "Description is required",
     "string.min": "Description must be at least 40 characters",
+    "any.required": "Description is required",
   }),
 
-  price: Joi.number().min(100).required().messages({
-    "number.base": "Price must be a number",
-    "number.min": "Minimum price is 100",
-    "any.required": "Price is required",
-  }),
+  duration: Joi.string().trim().required(),
 
-  seats: Joi.number().min(50).required().messages({
-    "number.base": "Seats must be a number",
-    "number.min": "Minimum number of seats is 50",
-    "any.required": "Seats count is required",
-  }),
-
-  duration: Joi.string()
-    .trim()
-    .pattern(/^\d+\s+(days|nights)$/i)
+  bestTimeToVisit: Joi.array()
+    .items(Joi.string().valid("Spring", "Summer", "Fall", "Winter"))
+    .min(1)
     .required()
     .messages({
-      "string.base": "Duration must be a string",
-      "string.empty": "Duration is required",
-      "string.pattern.base":
-        "Duration must be in format like '5 days' or '3 nights'",
-    }),
-
-  bestTimeToVisit: Joi.string()
-    .valid("Spring", "Summer", "Fall", "Winter")
-    .required()
-    .messages({
-      "any.only":
-        "Best time to visit must be one of: Spring, Summer, Fall, Winter",
-      "any.required": "Best time to visit is required",
+      "any.only": "Invalid season in bestTimeToVisit",
+      "array.min": "At least one season is required",
     }),
 
   images: Joi.array()
     .items(Joi.string().uri().message("Each image must be a valid URL"))
-    .messages({
-      "array.base": "Images must be an array of strings (URLs)",
-    }),
+    .optional(),
 
-  location: Joi.string().trim().required().messages({
-    "string.base": "Location must be a string",
-    "string.empty": "Location is required",
-  }),
+  location: Joi.string().trim().required(),
 
-  country: Joi.string().trim().required().messages({
-    "string.base": "Country must be a string",
-    "string.empty": "Country is required",
-  }),
+  country: Joi.string().trim().required(),
 
-  trip_day: Joi.date().optional(), // optional: set by pre-save hook if missing
+  interests: Joi.array()
+    .items(
+      Joi.string().valid(
+        "Food & Culinary",
+        "Historical Sites",
+        "Hiking & Nature Walks",
+        "Beaches & Water Activities",
+        "Museums & Art",
+        "Nightlife & Bars",
+        "Photography Spots",
+        "Shopping",
+        "Local Experiences"
+      )
+    )
+    .min(1)
+    .required(),
 
-  interests: Joi.array().items(Joi.string().trim()).min(1).required().messages({
-    "array.base": "Interests must be an array of strings",
-    "array.min": "At least one interest is required",
-  }),
+  travelStyles: Joi.string()
+    .valid(
+      "Relaxed",
+      "Luxury",
+      "Adventure",
+      "Cultural",
+      "Nature & Outdoors",
+      "City Exploration"
+    )
+    .required(),
+
+  groupTypes: Joi.string()
+    .valid("Solo", "Couple", "Family", "Friends", "Business")
+    .required(),
+
+  itinerary: Joi.array().items(daySchema).min(1).required(),
 });
 
 module.exports = tripValidationSchema;

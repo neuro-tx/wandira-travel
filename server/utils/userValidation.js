@@ -1,13 +1,9 @@
 const Joi = require("joi");
 
 const userValidationSchema = Joi.object({
-  first_name: Joi.string()
+  name: Joi.string()
     .required()
-    .messages({ "any.required": "first name is required" }),
-
-  last_name: Joi.string()
-    .required()
-    .messages({ "any.required": "last name is required" }),
+    .messages({ "any.required": "name is required" }),
 
   email: Joi.string()
     .email()
@@ -28,8 +24,6 @@ const userValidationSchema = Joi.object({
     .messages({ "any.required": "birth day is required" }),
 
   role: Joi.string().valid("admin", "user").default("user"),
-
-  phone: Joi.string().min(11).optional(),
 
   gender: Joi.string().valid("male", "female").default("male"),
 

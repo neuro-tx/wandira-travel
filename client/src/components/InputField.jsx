@@ -16,7 +16,7 @@ const InputField = ({ title, placeholder,value ,onchange ,type = "text" }) => {
   return (
     <div className="w-full relative flex flex-col gap-1">
       <label
-        htmlFor={title.toLowerCase().replace(/\s+/g, "-")}
+        // htmlFor={title.toLowerCase().replace(/\s+/g, "-")}
         className="text-[15px] capitalize font-semibold text-dark-200 font-recursive px-1 w-fit"
       >
         {title}:
@@ -28,7 +28,6 @@ const InputField = ({ title, placeholder,value ,onchange ,type = "text" }) => {
           type={inputType}
           placeholder={placeholder}
           className="w-full px-2 py-1 outline-none font-karla"
-          id={title.toLowerCase().replace(/\s+/g, "-")}
           ref={inputRef}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}

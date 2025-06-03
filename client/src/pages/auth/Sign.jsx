@@ -110,7 +110,7 @@ const Sign = () => {
 
             <div className="w-full">
               <Button
-                title="Sign in"
+                title="Sign Up"
                 type="submit"
                 leftIcon={<Send size={17} />}
                 classContainer="flex-center gap-2 center w-full bg-primary-200 rounded-lg text-white hover:bg-primary-100 py-3"
@@ -118,7 +118,7 @@ const Sign = () => {
 
               <p className="font-karla mt-2.5 px-1 text-dark-200 font-semibold text-sm">
                 Already have an account ?
-                <Link to="login" className='text-primary-100 ml-1'>Login</Link>
+                <Link to="/auth/login" className='text-primary-100 ml-1 hover:underline'>Login</Link>
               </p>
             </div>
           </div>

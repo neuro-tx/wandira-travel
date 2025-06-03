@@ -8,7 +8,7 @@ const Button = ({ title, classContainer, func, leftIcon, rightIcon , type= "butt
             <button
                 type={type}
                 className={cn(
-                    "w-fit px-5 py-2.5 cursor-pointer origin-left skew-0 overflow-hidden border-none outline-none group" ,classContainer
+                    "w-fit px-5 py-2.5 cursor-pointer origin-left skew-0 overflow-hidden border-none outline-none group duration-2" ,classContainer
                 )}
             >
                 {leftIcon}

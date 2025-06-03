@@ -15,8 +15,20 @@ import AllUsers from '../pages/admin/AllUsers';
 import About from '../pages/user/About';
 import Contact from '../pages/user/Contact';
 import AdminProvider from '../contexts/admin/AdminProvider';
+import AuthLayout from '../layout/AuthLayout';
+import Sign from '../pages/auth/Sign';
+import Login from '../pages/auth/Login';
 
 const router = createBrowserRouter([
+    {
+        path: "/auth",
+        element: <AuthLayout />,
+        children: [
+            { index: true, element: <Sign /> },
+            { path: "sign-in", element: <Sign /> },
+            { path: "login", element: <Login /> },
+        ]
+    },
     {
         path: '/',
         element: <UserLayout />,
@@ -27,7 +39,7 @@ const router = createBrowserRouter([
             { path: 'travels', element: <Travels /> },
             { path: 'travels/:travelId', element: <TravelDetails /> },
             { path: "about", element: <About /> },
-            { path: "contact", element: <About /> }
+            { path: "contact", element: <Contact /> }
         ]
     },
     {

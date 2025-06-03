@@ -17,7 +17,7 @@
   --color-primary-300: #6941c6;
   --color-primary-400: #5f19b3;
 
-  --color-ligh-50: #ECF2EF;
+  --color-ligh-50: #ecf2ef;
   --color-ligh-100: #f9fbfc;
   --color-ligh-200: #7f7e83;
 
@@ -40,9 +40,13 @@
   --shadow-300: 0px 2px 30px 0px rgba(0, 0, 0, 0.05);
   --shadow-400: 0px 2px 6px 0px rgba(13, 10, 44, 0.08);
   --shadow-500: 0px 12px 16px -4px rgba(16, 24, 40, 0.1);
+
+  --background-image-auth: url("/assets/images/auth-img.webp");
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
 }
 
@@ -59,16 +63,24 @@ html, body, #root {
     @apply flex items-center justify-between;
   }
 
+  .center {
+    @apply flex items-center justify-center;
+  }
+
+  .absolute-center {
+    @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+  }
+
   .special {
     @apply font-recursive;
     font-feature-settings: "ss01" on, "calt" on;
   }
 
   .duration-2 {
-    @apply transition-all duration-200
+    @apply transition-all duration-200;
   }
 
   .duration-3 {
-    @apply transition-all duration-300
+    @apply transition-all duration-300;
   }
 }

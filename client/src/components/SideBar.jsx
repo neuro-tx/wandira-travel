@@ -7,7 +7,7 @@ import { LogOut } from 'lucide-react';
 import { useInterface } from '../contexts/admin/InterfaceContext';
 
 const SideBar = () => {
-  const { user, logout } = useAuth();
+  const { user, logout ,token } = useAuth();
   const sideBarRef = useRef(null);
   const { sideBar, setSidebar } = useInterface();
 
@@ -90,7 +90,7 @@ const SideBar = () => {
             <div className="flex-between duration-2 hover:bg-ligh-100 p-1 px-2 rounded-lg">
               <div className="flex-center">
                 {<img
-                  src={user ? user.img : '/assets/images/dummy.jpg'}
+                  src={user.image || '/assets/images/dummy.jpg'}
                   alt={user ? user.name : "user"}
                   className='size-9 rounded-full object-cover object-center'
                 />}

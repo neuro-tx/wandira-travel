@@ -10,7 +10,8 @@ export const AuthProvider = ({ children }) => {
         img: "/assets/images/michael.webp",
         role: "admin"
     }
-    const [user, setuser] = useState(udata);
+    const [user, setuser] = useState(null);
+    const [token, settoken] = useState("")
 
     const login = (data) => {
         setuser(data);
@@ -20,7 +21,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <userContext.Provider value={{ user, setuser, login, logout }}>
+        <userContext.Provider value={{ user, setuser, login, logout ,token , settoken }}>
             {children}
         </userContext.Provider>
     )

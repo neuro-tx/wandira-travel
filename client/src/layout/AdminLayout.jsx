@@ -8,8 +8,8 @@ import NotFound from '../components/NotFound';
 import MobileNavBar from '../components/MobileNavBar';
 
 const AdminLayout = () => {
-    const { sideBar ,setSidebar } = useInterface();
-    const {user} = useAuth();
+    const { sideBar, setSidebar } = useInterface();
+    const { user } = useAuth();
 
     // check if the user is admin or not
     // if not show not found page
@@ -18,9 +18,9 @@ const AdminLayout = () => {
     }
 
     return (
-        <div 
-          className='w-screen min-h-dvh relative'>
-            <div className={cn("w-56 lg:w-64 h-full bg-black/60 fixed top-0 z-50 shadow-100 md:left-0 -left-full duration-2" ,sideBar ? "left-0 w-full" : "")}>
+        <div
+            className='w-screen min-h-dvh relative'>
+            <div className={cn("w-56 lg:w-64 h-full bg-black/60 fixed top-0 z-50 shadow-100 md:left-0 -left-full duration-2", sideBar ? "left-0 w-full" : "")}>
                 <SideBar />
             </div>
 

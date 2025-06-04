@@ -24,10 +24,6 @@ const userValidationSchema = Joi.object({
     .messages({ "any.required": "birth day is required" }),
 
   role: Joi.string().valid("admin", "user").default("user"),
-
-  gender: Joi.string().valid("male", "female").default("male"),
-
-  trips: Joi.array().items(Joi.string().hex().length(24)).optional(),
 });
 
 const loginValidationSchema = Joi.object({

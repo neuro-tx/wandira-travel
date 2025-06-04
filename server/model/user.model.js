@@ -33,11 +33,6 @@ const userSchema = new mongoose.Schema(
       enum: ["admin", "user"],
       default: "user",
     },
-    gender: {
-      type: String,
-      enum: ["male", "female"],
-      default: "male",
-    },
     trips: [
       {
         type: mongoose.Schema.Types.ObjectId,

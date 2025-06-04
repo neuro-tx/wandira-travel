@@ -6,14 +6,11 @@ const genrateToken = require("../utils/genrateToken");
 
 const register = asyncWrapper(async (req, res) => {
   const {
-    first_name,
-    last_name,
+    name,
     email,
     password,
     image,
     birth_day,
-    phone,
-    gender,
   } = req.body;
 
   const checkUser = await User.findOne({ email });
@@ -25,14 +22,11 @@ const register = asyncWrapper(async (req, res) => {
   const hashPwd = await bcrypt.hash(password, salt);
 
   const newUser = await User.create({
-    first_name,
-    last_name,
+    name,
     email,
     password: hashPwd,
     image,
     birth_day,
-    phone,
-    gender,
   });
 
   const token = genrateToken({
@@ -59,15 +53,11 @@ const register = asyncWrapper(async (req, res) => {
     dataform("success", 201, "user successfully added", {
       token,
       _id: newUser._id,
-      first_name: newUser.first_name,
-      last_name: newUser.last_name,
+      name: newUser.name,
       email: newUser.email,
-      phone: newUser.phone,
       role: newUser.role,
-      gender: newUser.gender,
       image: newUser.image,
       birth_day: newUser.birth_day,
-      trips: newUser.trips,
     })
   );
 });
@@ -108,14 +98,11 @@ const login = asyncWrapper(async (req, res) => {
     dataform("success", 200, "user loged in successfully", {
       token,
       _id: checkUser._id,
-      first_name: checkUser.first_name,
-      last_name: checkUser.last_name,
+      name: checkUser.name,
       email: checkUser.email,
-      phone: checkUser.phone,
-      gender: checkUser.gender,
+      role: checkUser.role,
       image: checkUser.image,
       birth_day: checkUser.birth_day,
-      trips: checkUser.trips,
     })
   );
 

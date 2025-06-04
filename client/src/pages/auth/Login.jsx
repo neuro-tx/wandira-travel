@@ -17,13 +17,35 @@ const Login = () => {
   const navgate = useNavigate();
 
   // Response data
-  const [resMessage, setresMessage] = useState("");
+  const [resData, setresData] = useState("");
   const [endPreocess, setendPreocess] = useState(false)
-  const { login, settoken } = useAuth();
+  const { login, settoken, setauthoed } = useAuth();
+  const loginFunc = (data) => {
+    login(data.data);
+    settoken(data.token);
+    setresData(data);
+  }
 
   const handleForm = (e) => {
-    setloading(true)
     e.preventDefault();
+
+    const validEmail = (email) => {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(email);
+    }
+
+    if (!email || !password) {
+      seterrorMessage("email and password are required")
+      return;
+    } else if (password.length < 6) {
+      seterrorMessage("password sholud more than 6 charachter")
+      return;
+    } else if (!validEmail(email)) {
+      seterrorMessage("please ,enter a valid email")
+      return
+    };
+
+    setloading(true)
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
@@ -32,16 +54,21 @@ const Login = () => {
     const postData = async () => {
       try {
         const response = await axiosInstance.post("/auth/login", formData);
-        login(response.data.data)
-        setresMessage(response.data.message)
-        settoken(response.data.data.token)
+        loginFunc(response.data);
 
-        setTimeout(() => {
-          navgate('/', { replace: true });
-        }, 2000);
+        if (response.status >= 200 && response.status < 300) {
+          setTimeout(() => {
+            setauthoed(true);
+            if (response.data.data.role === "admin") {
+              navgate('/admin', { replace: true });
+            } else {
+              navgate('/', { replace: true });
+            }
+          }, 500);
+        }
       } catch (err) {
-        console.error('Registration failed:', err.response?.data || err.message);
-        seterrorMessage(err.response?.data?.message || "Login failed.");
+        console.error('Registration failed:', err.response?.data.message || err.message);
+        setresData(err.response?.data || "Login failed.")
       } finally {
         setloading(false);
         setendPreocess(true);
@@ -51,17 +78,21 @@ const Login = () => {
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      setendPreocess(false)
-    }, 1500);
-  }, [endPreocess])
+    if (!endPreocess) return;
+    const timer = setTimeout(() => {
+      setendPreocess(false);
+    }, 1700);
+    
+    return () => clearTimeout(timer);
+  }, [endPreocess]);
+
 
   return (
     <div className='p-5 lg:p-7 bg-white rounded-xl shadow-200 w-2xl'>
       {endPreocess && (
         <Popup
-          title={resMessage}
-          image="/assets/images/blue-check.svg"
+          message={resData.message || "check internet connection"}
+          code={resData.stateCode}
         />
       )}
 

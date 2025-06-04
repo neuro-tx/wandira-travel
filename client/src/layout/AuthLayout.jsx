@@ -1,7 +1,19 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router'
+import { useAuth } from '../contexts/shared/Auth';
+import NotFound from '../components/NotFound';
+
 
 const AuthLayout = () => {
+    const { user ,authoed } = useAuth();
+
+    // check if there is a user : if treu redirect to not found page else continue
+    if(authoed || user) {
+        setTimeout(() => {
+            return <NotFound />
+        }, 500);
+    }
+
     return (
         <section className='min-h-dvh w-screen flex before:absolute before:bg-auth before:h-full before:w-full before:bg-no-repeat before:left-0 before:top-0 before:bg-cover'>
             <div className="w-full min-h-full relative">

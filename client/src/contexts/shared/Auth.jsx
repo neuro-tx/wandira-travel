@@ -11,7 +11,8 @@ export const AuthProvider = ({ children }) => {
         role: "admin"
     }
     const [user, setuser] = useState(null);
-    const [token, settoken] = useState("")
+    const [token, settoken] = useState("");
+    const [authoed, setauthoed] = useState(false);
 
     const login = (data) => {
         setuser(data);
@@ -21,7 +22,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <userContext.Provider value={{ user, setuser, login, logout ,token , settoken }}>
+        <userContext.Provider value={{ user ,setuser, login, logout, token, settoken, authoed, setauthoed }}>
             {children}
         </userContext.Provider>
     )

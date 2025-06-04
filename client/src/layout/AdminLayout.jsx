@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate, Outlet } from 'react-router'
+import { Outlet } from 'react-router'
 import SideBar from '../components/SideBar';
 import { cn } from '../utils/util';
 import { useInterface } from '../contexts/admin/InterfaceContext';
@@ -8,12 +8,12 @@ import NotFound from '../components/NotFound';
 import MobileNavBar from '../components/MobileNavBar';
 
 const AdminLayout = () => {
-    const { sideBar, setSidebar } = useInterface();
+    const { sideBar } = useInterface();
     const { user } = useAuth();
 
     // check if the user is admin or not
     // if not show not found page
-    if (!user || user.role !== "admin" || !user.role) {
+    if (!user || user.role !== "admin") {
         return <NotFound />
     }
 

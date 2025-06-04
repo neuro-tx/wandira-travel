@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Link, NavLink } from 'react-router';
+import { Link, NavLink, useNavigate } from 'react-router';
 import { sidebarIcon } from '../constants/links';
 import { cn } from "../utils/util";
 import { useAuth } from '../contexts/shared/Auth';
@@ -7,9 +7,10 @@ import { LogOut } from 'lucide-react';
 import { useInterface } from '../contexts/admin/InterfaceContext';
 
 const SideBar = () => {
-  const { user, logout ,token } = useAuth();
+  const { user, logout } = useAuth();
   const sideBarRef = useRef(null);
   const { sideBar, setSidebar } = useInterface();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOut = (e) => {
@@ -36,7 +37,12 @@ const SideBar = () => {
     return () => {
       mediaChange.removeEventListener("change", handleChange);
     }
-  }, [])
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/auth/login", { replace: true })
+  }
 
   return (
     <aside
@@ -105,7 +111,7 @@ const SideBar = () => {
               </div>
               <button
                 className='text-primary-300 hover:text-primary-200 cursor-pointer size-8 grid place-items-center rounded-full'
-                onClick={logout}
+                onClick={handleLogout}
               >
                 <LogOut size={20} />
               </button>

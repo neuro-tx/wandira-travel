@@ -28,6 +28,7 @@ const Login = () => {
 
   const handleForm = (e) => {
     e.preventDefault();
+    setendPreocess(false);
 
     const validEmail = (email) => {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -47,8 +48,8 @@ const Login = () => {
 
     setloading(true)
     const formData = new FormData();
-    formData.append("email", email);
-    formData.append("password", password);
+    formData.append("email", email.trim());
+    formData.append("password", password.trim());
     seterrorMessage("")
 
     const postData = async () => {
@@ -56,19 +57,17 @@ const Login = () => {
         const response = await axiosInstance.post("/auth/login", formData);
         loginFunc(response.data);
 
-        if (response.status >= 200 && response.status < 300) {
-          setTimeout(() => {
-            setauthoed(true);
-            if (response.data.data.role === "admin") {
-              navgate('/admin', { replace: true });
-            } else {
-              navgate('/', { replace: true });
-            }
-          }, 500);
-        }
+        setTimeout(() => {
+          const targetPath = response.data.data.role === "admin" ? '/admin' : '/';
+          
+          if (response.status >= 200 && response.status < 300) {
+            navgate(targetPath, { replace: true });
+          }
+          setauthoed(true);
+        }, 1700);
       } catch (err) {
         console.error('Registration failed:', err.response?.data.message || err.message);
-        setresData(err.response?.data || "Login failed.")
+        setresData(err.response?.data || "Login failed. Please try again.")
       } finally {
         setloading(false);
         setendPreocess(true);
@@ -81,8 +80,8 @@ const Login = () => {
     if (!endPreocess) return;
     const timer = setTimeout(() => {
       setendPreocess(false);
-    }, 1700);
-    
+    }, 1500);
+
     return () => clearTimeout(timer);
   }, [endPreocess]);
 
@@ -91,7 +90,7 @@ const Login = () => {
     <div className='p-5 lg:p-7 bg-white rounded-xl shadow-200 w-2xl'>
       {endPreocess && (
         <Popup
-          message={resData.message || "check internet connection"}
+          message={resData.message}
           code={resData.stateCode}
         />
       )}
@@ -125,7 +124,7 @@ const Login = () => {
           />
 
           {errorMessage && (
-            <p className="text-red-200 font-recursive text-base text-center my-1">
+            <p className="text-red-200 text-xs bg-red-200/20 p-1 font-recursive text-center my-1 duration-2">
               {errorMessage}
             </p>
           )}

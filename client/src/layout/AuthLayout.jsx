@@ -1,17 +1,24 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router'
+import { Link, Outlet ,Navigate } from 'react-router'
 import { useAuth } from '../contexts/shared/Auth';
 import NotFound from '../components/NotFound';
 
 
 const AuthLayout = () => {
-    const { user ,authoed } = useAuth();
+    const { authoed ,user } = useAuth();
 
-    // check if there is a user : if treu redirect to not found page else continue
-    if(authoed || user) {
-        setTimeout(() => {
-            return <NotFound />
-        }, 500);
+    if (authoed) {
+        return (
+            <div className="min-h-dvh w-screen flex items-center justify-center">
+                <div>Loading...</div>
+            </div>
+        );
+    }
+
+    // If user is authenticated, redirect to appropriate page
+    if (user) {
+        const targetPath = user.role === "admin" ? '/admin' : '/';
+        return <Navigate to={targetPath} replace />;
     }
 
     return (

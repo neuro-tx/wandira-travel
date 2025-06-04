@@ -36,7 +36,7 @@ const Popup = ({ code, message="Something went wrong , try again later" }) => {
                         {icon}
                     </div>
 
-                    <h2 className="text-lg font-recursive text-dark-200 font-semibold capitalize">
+                    <h2 className="text-sm sm:text-base md:text-lg font-recursive text-dark-200 font-semibold capitalize">
                         {message}
                     </h2>
                 </div>

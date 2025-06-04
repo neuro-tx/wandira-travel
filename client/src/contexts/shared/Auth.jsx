@@ -19,6 +19,8 @@ export const AuthProvider = ({ children }) => {
     }
     const logout = () => {
         setuser(null);
+        settoken("");
+        setauthoed(false);
     }
 
     return (

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Outlet } from 'react-router'
+import React, { useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router';
 import SideBar from '../components/SideBar';
 import { cn } from '../utils/util';
 import { useInterface } from '../contexts/admin/InterfaceContext';
@@ -9,18 +9,40 @@ import MobileNavBar from '../components/MobileNavBar';
 
 const AdminLayout = () => {
     const { sideBar } = useInterface();
-    const { user } = useAuth();
+    const { user, authed } = useAuth();
+    const navigate = useNavigate();
 
-    // check if the user is admin or not
-    // if not show not found page
-    if (!user || user.role !== "admin") {
+    // Handle authentication and authorization in useEffect
+    useEffect(() => {
+        if (authed) return; // Wait for auth to load
+
+        if (!user) {
+            navigate("/auth/login", { replace: true });
+            return;
+        }
+    }, [user, authed, navigate]);
+
+    // Show authed while auth is being determined
+    if (authed) {
+        return <div>Loading...</div>;
+    }
+
+    // If no user, don't render anything (navigation will happen in useEffect)
+    if (!user) {
+        return null;
+    }
+
+    // If user exists but is not admin, show 404
+    if (user?.role !== "admin") {
         return <NotFound />
     }
 
     return (
-        <div
-            className='w-screen min-h-dvh relative'>
-            <div className={cn("w-56 lg:w-64 h-full bg-black/60 fixed top-0 z-50 shadow-100 md:left-0 -left-full duration-2", sideBar ? "left-0 w-full" : "")}>
+        <div className='w-screen min-h-dvh relative'>
+            <div className={cn(
+                "w-56 lg:w-64 h-full bg-black/60 fixed top-0 z-50 shadow-100 md:left-0 -left-full duration-2",
+                sideBar ? "left-0 w-full" : ""
+            )}>
                 <SideBar />
             </div>
 

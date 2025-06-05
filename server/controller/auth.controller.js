@@ -3,19 +3,14 @@ const bcrypt = require("bcrypt");
 const User = require("../model/user.model");
 const dataform = require("../utils/dataForm");
 const genrateToken = require("../utils/genrateToken");
+const ImageKit = require("imagekit");
 
 const register = asyncWrapper(async (req, res) => {
-  const {
-    name,
-    email,
-    password,
-    image,
-    birth_day,
-  } = req.body;
+  const { name, email, password, image, birth_day } = req.body;
 
   const checkUser = await User.findOne({ email });
   if (checkUser) {
-    return res.status(400).json(dataform("faild", 400, "invalid user data"));
+    return res.status(400).json(dataform("faild", 400, "invalid email or user data"));
   }
 
   const salt = await bcrypt.genSalt(10);
@@ -68,7 +63,7 @@ const login = asyncWrapper(async (req, res) => {
   if (!checkUser) {
     return res.status(404).json(dataform("faild", 404, "invalid email"));
   }
-  
+
   const pwdComapre = await bcrypt.compare(password, checkUser.password);
   if (!pwdComapre) {
     return res.status(400).json(dataform("faild", 400, "invalid password"));
@@ -112,4 +107,21 @@ const login = asyncWrapper(async (req, res) => {
   }
 });
 
-module.exports = { register, login };
+const imageKitAuth = asyncWrapper(async (req, res) => {
+  const image_kit = new ImageKit({
+    urlEndpoint: process.env.IMAGEKIT_URL,
+    publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+  });
+
+  const { token, expire, signature } = image_kit.getAuthenticationParameters();
+
+  res.send({
+    token,
+    expire,
+    signature,
+    publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+  });
+});
+
+module.exports = { register, login ,imageKitAuth };

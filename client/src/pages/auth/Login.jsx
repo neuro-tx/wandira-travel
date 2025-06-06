@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import InputField from '../../components/InputField';
 import Button from '../../components/Button';
 import { Link, replace, useNavigate } from 'react-router'
 import { Send } from "lucide-react";
 import Spinear from '../../components/loaders/Spinear';
 import { useAuth } from '../../contexts/shared/Auth';
-import Popup from '../../components/Popup';
 import useAxios from '../../utils/useAxios';
-import {LOGIN_API} from '../../apis/api';
-
+import { LOGIN_API } from '../../apis/api';
+import { useZodValidation, userLoginSchema } from '../../constants/user_vldation';
+import { cn } from '../../utils/util';
 
 const Login = () => {
   const axiosInstance = useAxios();
@@ -17,37 +17,33 @@ const Login = () => {
   const [loading, setloading] = useState(false);
   const [errorMessage, seterrorMessage] = useState("");
   const navgate = useNavigate();
+  const { validate } = useZodValidation(userLoginSchema);
 
   // Response data
   const [resData, setresData] = useState("");
-  const [endPreocess, setendPreocess] = useState(false)
   const { login } = useAuth();
+
+  const validateForm = () => {
+    const formData = {
+      email,
+      password,
+    };
+
+    return validate(formData, seterrorMessage);
+  }
 
   const handleForm = (e) => {
     e.preventDefault();
-    setendPreocess(false);
-
-    const validEmail = (email) => {
-      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return regex.test(email);
+    if (!validateForm()) {
+      return;
     }
-
-    if (!email || !password) {
-      seterrorMessage("email and password are required")
-      return;
-    } else if (password.length < 6) {
-      seterrorMessage("password sholud more than 6 charachter")
-      return;
-    } else if (!validEmail(email)) {
-      seterrorMessage("please ,enter a valid email")
-      return
-    };
 
     setloading(true)
     const formData = new FormData();
     formData.append("email", email.trim());
     formData.append("password", password.trim());
     seterrorMessage("")
+    setresData("");
 
     const postData = async () => {
       try {
@@ -60,35 +56,17 @@ const Login = () => {
         }
 
       } catch (err) {
-        console.error('Registration failed:', err.response?.data.message || err.message);
-        setresData(err.response?.data || "Login failed. Please try again.")
+        // console.error('Registration failed:', err.response?.data.message || err.message);
+        setresData(err.response?.data || {message: "Login failed. Please try again."})
       } finally {
         setloading(false);
-        setendPreocess(true);
       }
     }
     postData();
   }
 
-  useEffect(() => {
-    if (!endPreocess) return;
-    const timer = setTimeout(() => {
-      setendPreocess(false);
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, [endPreocess]);
-
-
   return (
     <div className='p-5 lg:p-7 bg-white rounded-xl shadow-200 w-2xl'>
-      {endPreocess && (
-        <Popup
-          message={resData.message}
-          code={resData.stateCode}
-        />
-      )}
-
       {loading && (
         <div className="size-full absolute top-0 left-0 bg-black/40 z-40 center">
           <Spinear />
@@ -108,8 +86,13 @@ const Login = () => {
           <InputField title="email address" placeholder="enter your email" type='email' value={email} onchange={(val) => setemail(val)} />
           <InputField title="password" placeholder="enter your password" type='password' value={password} onchange={(val) => setpassword(val)} />
         </div>
+        {errorMessage && (
+          <p className="text-red-200 text-xs bg-red-200/30 p-1.5 font-recursive text-center my-1 mt-2 duration-2 rounded-md">
+            {errorMessage}
+          </p>
+        )}
 
-        <div className="w-full mt-5">
+        <div className="w-full mt-3">
           <Button
             title="log in"
             type="submit"
@@ -117,9 +100,9 @@ const Login = () => {
             classContainer="flex-center gap-2 center w-full bg-primary-200 rounded-lg text-white hover:bg-primary-100 py-3"
           />
 
-          {errorMessage && (
-            <p className="text-red-200 text-xs bg-red-200/20 p-1 font-recursive text-center my-1 duration-2">
-              {errorMessage}
+          {resData && (
+            <p className={cn("text-pink-500 text-xs p-1.5 font-recursive font-semibold text-center my-1 duration-2 bg-pink-200 rounded-md", resData.state === "faild" ? "bg-red-300/80 text-red-700" : "")}>
+              {resData.message || "connection error or check internet"}
             </p>
           )}
 

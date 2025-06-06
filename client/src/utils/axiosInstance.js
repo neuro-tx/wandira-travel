@@ -15,9 +15,7 @@ axiosInstance.interceptors.request.use(
     const token = getToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-      console.log(token);
     }
-    console.log(config);
     return config;
   },
   (error) => {
@@ -27,7 +25,6 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response) => {
-    console.log(response);
     return response;
   },
   async (error) => {

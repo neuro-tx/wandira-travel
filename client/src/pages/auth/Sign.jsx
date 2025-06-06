@@ -1,15 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { User, Upload, Trash2, Send } from "lucide-react";
 import InputField from '../../components/InputField';
 import Button from '../../components/Button';
 import { Link, useNavigate } from 'react-router'
 import { useAuth } from '../../contexts/shared/Auth';
-import Popup from '../../components/Popup';
 import handleFileUpload from '../../utils/upload';
 import Spinear from '../../components/loaders/Spinear';
 import useAxios from '../../utils/useAxios';
-import { SIGNIN_API } from '../../apis/api'
-
+import { SIGNIN_API } from '../../apis/api';
+import { useZodValidation, userRegistrationSchema } from '../../constants/user_vldation';
+import { cn } from '../../utils/util';
 
 const SignUp = () => {
   const axiosInstance = useAxios();
@@ -17,6 +17,7 @@ const SignUp = () => {
   const fileUploadRef = useRef(null);
   const { login } = useAuth();
   const navigate = useNavigate();
+  const { validate } = useZodValidation(userRegistrationSchema);
 
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -28,7 +29,6 @@ const SignUp = () => {
   // Response state
   const [errorMessage, setErrorMessage] = useState("");
   const [responseData, setResponseData] = useState("");
-  const [showProcessResult, setShowProcessResult] = useState(false);
 
   const triggerFileUpload = () => {
     fileUploadRef.current.click();
@@ -56,54 +56,15 @@ const SignUp = () => {
     selectedImage ? removeSelectedImage() : triggerFileUpload();
   }
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
-
-  const calculateAge = (birthDate) => {
-    const birth = new Date(birthDate);
-    const today = new Date();
-    let age = today.getFullYear() - birth.getFullYear();
-    const monthDiff = today.getMonth() - birth.getMonth();
-
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-      age--;
-    }
-
-    return age;
-  }
-
   const validateForm = () => {
-    setErrorMessage("");
+    const formData = {
+      userName,
+      userEmail,
+      userPassword,
+      userBirthDate
+    };
 
-    if (!userEmail || !userPassword || !userName || !userBirthDate) {
-      setErrorMessage("All user data are required");
-      return false;
-    }
-
-    if (userPassword.length < 6) {
-      setErrorMessage("Password should be more than 6 characters");
-      return false;
-    }
-
-    if (!validateEmail(userEmail)) {
-      setErrorMessage("Please enter a valid email");
-      return false;
-    }
-
-    if (userName.length < 5) {
-      setErrorMessage("Name should be more than 5 characters");
-      return false;
-    }
-
-    const age = calculateAge(userBirthDate);
-    if (age < 18) {
-      setErrorMessage("Age must be 18 or older");
-      return false;
-    }
-
-    return true;
+    return validate(formData, setErrorMessage);
   }
 
   const handleFormSubmit = async (e) => {
@@ -113,10 +74,8 @@ const SignUp = () => {
       return;
     }
 
-
     try {
       setIsLoading(true);
-      setShowProcessResult(false);
 
       const formData = new FormData();
       // Prepare form data
@@ -140,23 +99,12 @@ const SignUp = () => {
       }
 
     } catch (error) {
-      console.error('Registration failed:', error.response?.data.message || error.message);
+      // console.error('Registration failed:', error.response?.data.message || error.message);
       setResponseData(error.response?.data || { message: "Registration failed. Please try again." });
     } finally {
       setIsLoading(false);
-      setShowProcessResult(true);
     }
   }
-
-  useEffect(() => {
-    if (!showProcessResult) return;
-
-    const timer = setTimeout(() => {
-      setShowProcessResult(false);
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, [showProcessResult]);
 
   useEffect(() => {
     return () => {
@@ -168,13 +116,6 @@ const SignUp = () => {
 
   return (
     <div className='p-5 lg:p-7 bg-white rounded-xl shadow-200 w-2xl'>
-      {showProcessResult && (
-        <Popup
-          message={responseData.message}
-          code={responseData.stateCode}
-        />
-      )}
-
       {isLoading && (
         <div className="size-full absolute top-0 left-0 bg-black/40 z-40 center">
           <Spinear />
@@ -260,6 +201,12 @@ const SignUp = () => {
             />
           </div>
 
+          {errorMessage && (
+            <p className="text-red-200 text-xs bg-red-200/30 p-1.5 font-recursive text-center  my-2 duration-2 rounded-md">
+              {errorMessage}
+            </p>
+          )}
+
           <div className="w-full">
             <Button
               title="Sign Up"
@@ -268,9 +215,9 @@ const SignUp = () => {
               classContainer="flex-center gap-2 center w-full bg-primary-200 rounded-lg text-white hover:bg-primary-100 py-3"
             />
 
-            {errorMessage && (
-              <p className="text-red-200 text-xs bg-red-200/20 p-1 font-recursive text-center my-1 duration-200">
-                {errorMessage}
+            {responseData && (
+              <p className={cn("text-pink-500 text-xs p-1.5 font-recursive font-semibold text-center my-1 duration-2 bg-pink-200 rounded-md", responseData.state === "faild" ? "bg-red-300/80 text-red-700" : "")}>
+                {responseData.message || "connection error or check internet"}
               </p>
             )}
 

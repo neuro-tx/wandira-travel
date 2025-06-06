@@ -5,7 +5,7 @@ import router from './routes';
 import { AuthProvider, useAuth } from './contexts/shared/Auth';
 import Loading from './components/loaders/Loading';
 import useAxios from './utils/useAxios';
-import { USER_API } from './apis/api'
+import { USER_API } from './apis/api';
 
 const AppContent = () => {
   const axiosInstance = useAxios();
@@ -53,7 +53,7 @@ const AppContent = () => {
 const App = () => {
 
   return (
-    <div className="w-screen min-h-dvh bg-light-100 overflow-x-hidden relative">
+    <div className="w-screen min-h-dvh bg-light-100 overflow-x-hidden">
       <AuthProvider>
         <AppContent />
       </AuthProvider>

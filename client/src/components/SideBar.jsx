@@ -6,7 +6,7 @@ import { useAuth } from '../contexts/shared/Auth';
 import { LogOut } from 'lucide-react';
 import { useInterface } from '../contexts/admin/InterfaceContext';
 import useAxios from '../utils/useAxios';
-import { LOG_OUT } from '../apis/api'
+import { LOG_OUT } from '../apis/api';
 
 const SideBar = () => {
   const axiosInstance = useAxios();

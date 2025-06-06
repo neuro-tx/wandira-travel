@@ -11,10 +11,8 @@ const AdminLayout = () => {
     const { sideBar } = useInterface();
     const { user, authed } = useAuth();
     const navigate = useNavigate();
-
-    // Handle authentication and authorization in useEffect
     useEffect(() => {
-        if (authed) return; // Wait for auth to load
+        if (authed) return; 
 
         if (!user) {
             navigate("/auth/login", { replace: true });
@@ -22,17 +20,14 @@ const AdminLayout = () => {
         }
     }, [user, authed, navigate]);
 
-    // Show authed while auth is being determined
     if (authed) {
         return <div>Loading...</div>;
     }
 
-    // If no user, don't render anything (navigation will happen in useEffect)
     if (!user) {
         return null;
     }
 
-    // If user exists but is not admin, show 404
     if (user?.role !== "admin") {
         return <NotFound />
     }

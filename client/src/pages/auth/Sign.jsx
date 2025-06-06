@@ -7,12 +7,15 @@ import { useAuth } from '../../contexts/shared/Auth';
 import Popup from '../../components/Popup';
 import handleFileUpload from '../../utils/upload';
 import Spinear from '../../components/loaders/Spinear';
-import axiosInstance from '../../utils/axiosInstance';
+import useAxios from '../../utils/useAxios';
+import { SIGNIN_API } from '../../apis/api'
+
 
 const SignUp = () => {
+  const axiosInstance = useAxios();
   const [selectedImage, setSelectedImage] = useState(null);
   const fileUploadRef = useRef(null);
-  const { login, settoken, setauthoed } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const [userName, setUserName] = useState("");
@@ -21,18 +24,11 @@ const SignUp = () => {
   const [userBirthDate, setUserBirthDate] = useState("");
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [uploadedImageData, setUploadedImageData] = useState(null);
 
   // Response state
   const [errorMessage, setErrorMessage] = useState("");
   const [responseData, setResponseData] = useState("");
   const [showProcessResult, setShowProcessResult] = useState(false);
-
-  const handleLoginSuccess = (data) => {
-    login(data.data);
-    settoken(data.token);
-    setResponseData(data);
-  }
 
   const triggerFileUpload = () => {
     fileUploadRef.current.click();
@@ -117,41 +113,31 @@ const SignUp = () => {
       return;
     }
 
-    setIsLoading(true);
-    setShowProcessResult(false);
-
-    // Upload image if selected
-    if (selectedImage) {
-      const uploadResponse = await handleFileUpload(selectedImage);
-      setUploadedImageData({
-        url: uploadResponse.url,
-        name: uploadResponse.name
-      });
-    }
-
-    // Prepare form data
-    const formData = new FormData();
-    formData.append("name", userName.trim());
-    formData.append("email", userEmail.trim());
-    formData.append("password", userPassword.trim());
-    formData.append("birth_day", new Date(userBirthDate).toISOString());
-
-    if (uploadedImageData) {
-      formData.append("image", uploadedImageData.url);
-    }
 
     try {
-      const response = await axiosInstance.post("/auth/sign-in", formData);
-      handleLoginSuccess(response.data);
+      setIsLoading(true);
+      setShowProcessResult(false);
 
-      setTimeout(() => {
-        const targetPath = response.data.data.role === "admin" ? '/admin' : '/';
+      const formData = new FormData();
+      // Prepare form data
+      formData.append("name", userName.trim());
+      formData.append("email", userEmail.trim());
+      formData.append("password", userPassword.trim());
+      formData.append("birth_day", new Date(userBirthDate).toISOString());
 
-        if (response.status >= 200 && response.status < 300) {
-          navigate(targetPath, { replace: true });
-        }
-        setauthoed(true);
-      }, 1700);
+      // Upload image if selected
+      if (selectedImage) {
+        const uploadResponse = await handleFileUpload(selectedImage);
+        formData.append("image", uploadResponse.url);
+      }
+
+      const response = await axiosInstance.post(SIGNIN_API, formData);
+      login(response.data.data)
+
+      const targetPath = response.data.data.role === "admin" ? '/admin' : '/';
+      if (response.status >= 200 && response.status < 300) {
+        navigate(targetPath, { replace: true });
+      }
 
     } catch (error) {
       console.error('Registration failed:', error.response?.data.message || error.message);

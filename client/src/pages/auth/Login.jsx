@@ -3,13 +3,15 @@ import InputField from '../../components/InputField';
 import Button from '../../components/Button';
 import { Link, replace, useNavigate } from 'react-router'
 import { Send } from "lucide-react";
-import axiosInstance from '../../utils/axiosInstance';
 import Spinear from '../../components/loaders/Spinear';
 import { useAuth } from '../../contexts/shared/Auth';
 import Popup from '../../components/Popup';
+import useAxios from '../../utils/useAxios';
+import {LOGIN_API} from '../../apis/api';
 
 
 const Login = () => {
+  const axiosInstance = useAxios();
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [loading, setloading] = useState(false);
@@ -19,12 +21,7 @@ const Login = () => {
   // Response data
   const [resData, setresData] = useState("");
   const [endPreocess, setendPreocess] = useState(false)
-  const { login, settoken, setauthoed } = useAuth();
-  const loginFunc = (data) => {
-    login(data.data);
-    settoken(data.token);
-    setresData(data);
-  }
+  const { login } = useAuth();
 
   const handleForm = (e) => {
     e.preventDefault();
@@ -54,17 +51,14 @@ const Login = () => {
 
     const postData = async () => {
       try {
-        const response = await axiosInstance.post("/auth/login", formData);
-        loginFunc(response.data);
+        const response = await axiosInstance.post(LOGIN_API, formData);
+        login(response.data.data)
 
-        setTimeout(() => {
-          const targetPath = response.data.data.role === "admin" ? '/admin' : '/';
-          
-          if (response.status >= 200 && response.status < 300) {
-            navgate(targetPath, { replace: true });
-          }
-          setauthoed(true);
-        }, 1700);
+        const targetPath = response.data.data.role === "admin" ? '/admin' : '/';
+        if (response.status >= 200 && response.status < 300) {
+          navgate(targetPath, { replace: true });
+        }
+
       } catch (err) {
         console.error('Registration failed:', err.response?.data.message || err.message);
         setresData(err.response?.data || "Login failed. Please try again.")

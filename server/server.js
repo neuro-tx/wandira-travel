@@ -13,6 +13,7 @@ const tripRouter = require("./routes/trip.route");
 const bookingRouter = require("./routes/booking.route");
 const authRouter = require("./routes/auth.route");
 const refreshRoute = require("./routes/refresh.route");
+const accountRouter = require("./routes/account.route");
 
 const app = express();
 const limiter = rateLimit({
@@ -25,7 +26,10 @@ app.set("trust proxy", 1);
 
 app.use(helmet());
 app.use(limiter);
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173" ,
+  credentials: true,
+}));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
@@ -35,6 +39,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/trip", tripRouter);
 app.use("/api/v1/booking", bookingRouter);
 app.use("/api/refresh", refreshRoute);
+app.use("/api/profile", accountRouter);
 
 app.use(handler);
 

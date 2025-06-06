@@ -5,8 +5,11 @@ import { cn } from "../utils/util";
 import { useAuth } from '../contexts/shared/Auth';
 import { LogOut } from 'lucide-react';
 import { useInterface } from '../contexts/admin/InterfaceContext';
+import useAxios from '../utils/useAxios';
+import { LOG_OUT } from '../apis/api'
 
 const SideBar = () => {
+  const axiosInstance = useAxios();
   const { user, logout } = useAuth();
   const sideBarRef = useRef(null);
   const { sideBar, setSidebar } = useInterface();
@@ -39,9 +42,16 @@ const SideBar = () => {
     }
   }, []);
 
-  const handleLogout = () => {
-    logout();
-    navigate("/auth/login", { replace: true })
+  const handleLogout = async () => {
+    try {
+      const response = await axiosInstance.post(LOG_OUT);
+      if (response.data.stateCode) {
+        logout();
+        navigate("/auth/login", { replace: true })
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (

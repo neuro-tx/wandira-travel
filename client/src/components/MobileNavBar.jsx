@@ -9,7 +9,6 @@ const MobileNavBar = () => {
 
     const toggleSidebar = () => {
         setSidebar((prev) => !prev);
-        console.log(sideBar)
     }
     return (
         <div className={cn("p-4 px-5 shadow-100 sm:px-8 w-full md:hidden")}>

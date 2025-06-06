@@ -5,18 +5,10 @@ import NotFound from '../components/NotFound';
 
 
 const AuthLayout = () => {
-    const { authoed ,user } = useAuth();
-
-    if (authoed) {
-        return (
-            <div className="min-h-dvh w-screen flex items-center justify-center">
-                <div>Loading...</div>
-            </div>
-        );
-    }
+    const { authoed ,user ,token } = useAuth();
 
     // If user is authenticated, redirect to appropriate page
-    if (user) {
+    if (authoed && user) {
         const targetPath = user.role === "admin" ? '/admin' : '/';
         return <Navigate to={targetPath} replace />;
     }

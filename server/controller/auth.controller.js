@@ -10,7 +10,9 @@ const register = asyncWrapper(async (req, res) => {
 
   const checkUser = await User.findOne({ email });
   if (checkUser) {
-    return res.status(400).json(dataform("faild", 400, "invalid email or user data"));
+    return res
+      .status(400)
+      .json(dataform("faild", 400, "invalid email or user data"));
   }
 
   const salt = await bcrypt.genSalt(10);
@@ -40,7 +42,8 @@ const register = asyncWrapper(async (req, res) => {
 
   res.cookie("refresh-token", refreshToken, {
     httpOnly: true,
-    sameSite: "strict",
+    sameSite: "lax",
+    secure: false,
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
@@ -85,7 +88,8 @@ const login = asyncWrapper(async (req, res) => {
 
   res.cookie("refresh-token", refreshToken, {
     httpOnly: true,
-    sameSite: "strict",
+    sameSite: "lax",
+    secure: false,
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
@@ -124,4 +128,14 @@ const imageKitAuth = asyncWrapper(async (req, res) => {
   });
 });
 
-module.exports = { register, login ,imageKitAuth };
+const logout = asyncWrapper(async (req, res) => {
+  res.clearCookie("refresh-token", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: false,
+  });
+
+  res.status(200).json(dataform("success", 200, "user loged out successfully"));
+});
+
+module.exports = { register, login, imageKitAuth ,logout };

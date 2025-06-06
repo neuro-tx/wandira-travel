@@ -16,6 +16,8 @@ export const AuthProvider = ({ children }) => {
 
     const login = (data) => {
         setuser(data);
+        settoken(data.token);
+        setauthoed(true);
     }
     const logout = () => {
         setuser(null);

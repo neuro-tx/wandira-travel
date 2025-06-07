@@ -12,7 +12,7 @@ const AdminLayout = () => {
     const { user, authed } = useAuth();
     const navigate = useNavigate();
     useEffect(() => {
-        if (authed) return; 
+        if (authed) return;
 
         if (!user) {
             navigate("/auth/login", { replace: true });
@@ -35,15 +35,17 @@ const AdminLayout = () => {
     return (
         <div className='w-screen min-h-dvh relative'>
             <div className={cn(
-                "w-56 lg:w-64 h-full bg-black/60 fixed top-0 z-50 shadow-100 md:left-0 -left-full duration-2",
+                "w-52 lg:w-64 h-full fixed top-0 z-50 shadow-100 md:left-0 -left-full bg-black/60 duration-2",
                 sideBar ? "left-0 w-full" : ""
             )}>
                 <SideBar />
             </div>
 
-            <main className={cn("md:ml-56 lg:ml-64 duration-2 min-h-dvh bg-ligh-100")}>
+            <main className={cn("md:ml-52 lg:ml-64 duration-2 min-h-dvh bg-ligh-100")}>
                 <MobileNavBar />
-                <Outlet />
+                <main className='px-5'>
+                    <Outlet />
+                </main>
             </main>
         </div>
     )

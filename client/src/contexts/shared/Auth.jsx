@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
         img: "/assets/images/michael.webp",
         role: "admin"
     }
-    const [user, setuser] = useState(null);
+    const [user, setuser] = useState(udata);
     const [token, settoken] = useState("");
     const [authoed, setauthoed] = useState(false);
 

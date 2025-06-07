@@ -1,15 +1,16 @@
 import React from 'react';
 import { cn } from '../utils/util';
 
-
-const Button = ({ title, classContainer, func, leftIcon, rightIcon , type= "button" }) => {
+const Button = ({ title, classContainer, topClass, func, leftIcon, rightIcon, type = "button" }) => {
+    
     return (
-        <div className="w-full relative z-10 border-none outline-none">
+        <div className={cn("w-full relative border-none outline-none" ,topClass)}>
             <button
                 type={type}
                 className={cn(
-                    "w-fit px-5 py-2.5 cursor-pointer origin-left skew-0 overflow-hidden border-none outline-none group duration-2" ,classContainer
+                    "w-full px-5 py-2.5 cursor-pointer origin-left skew-0 overflow-hidden border-none outline-none group duration-2", classContainer
                 )}
+                onClick={func}
             >
                 {leftIcon}
 

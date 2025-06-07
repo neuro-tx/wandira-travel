@@ -57,7 +57,7 @@ const SideBar = () => {
   return (
     <aside
       ref={sideBarRef}
-      className='h-full w-56 lg:w-64 bg-white duration-2 flex flex-col justify-between'
+      className='h-full w-64 md:w-52 lg:w-64 bg-white duration-2 flex flex-col justify-between relative z-40'
     >
       <div className="p-3 border-b border-ligh-50">
         <Link

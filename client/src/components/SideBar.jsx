@@ -1,19 +1,16 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router';
 import { sidebarIcon } from '../constants/links';
 import { cn } from "../utils/util";
 import { useAuth } from '../contexts/shared/Auth';
 import { LogOut } from 'lucide-react';
 import { useInterface } from '../contexts/admin/InterfaceContext';
-import useAxios from '../utils/useAxios';
-import { LOG_OUT } from '../apis/api';
 
-const SideBar = () => {
-  const axiosInstance = useAxios();
-  const { user, logout } = useAuth();
+
+const SideBar = ({ confrimBox }) => {
+  const { user } = useAuth();
   const sideBarRef = useRef(null);
   const { sideBar, setSidebar } = useInterface();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOut = (e) => {
@@ -42,22 +39,10 @@ const SideBar = () => {
     }
   }, []);
 
-  const handleLogout = async () => {
-    try {
-      const response = await axiosInstance.post(LOG_OUT);
-      if (response.data.stateCode) {
-        logout();
-        navigate("/auth/login", { replace: true })
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   return (
     <aside
       ref={sideBarRef}
-      className='h-full w-64 md:w-52 lg:w-64 bg-white duration-2 flex flex-col justify-between relative z-40'
+      className='h-full w-64 md:w-52 lg:w-64 bg-white duration-2 flex flex-col justify-between'
     >
       <div className="p-3 border-b border-ligh-50">
         <Link
@@ -121,7 +106,7 @@ const SideBar = () => {
               </div>
               <button
                 className='text-primary-300 hover:text-primary-200 cursor-pointer size-8 grid place-items-center rounded-full'
-                onClick={handleLogout}
+                onClick={() => confrimBox(true)}
               >
                 <LogOut size={20} />
               </button>

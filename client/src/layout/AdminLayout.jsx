@@ -17,7 +17,7 @@ const AdminLayout = () => {
     const { user, authed, logout } = useAuth();
     const navigate = useNavigate();
     const axiosInstance = useAxios();
-    const [logoutMess, setlogoutMess] = useState(true)
+    const [logoutMess, setlogoutMess] = useState(false)
     const [start, setStart] = useState(false);
 
     useEffect(() => {
@@ -67,7 +67,7 @@ const AdminLayout = () => {
     }
 
     return (
-        <div className='w-screen min-h-dvh relative'>
+        <div className='w-screen min-h-dvh'>
             {openConfirm && (
                 <ConfirmBox
                     title="Log out"

@@ -33,6 +33,18 @@ const DaySchema = new mongoose.Schema({
   },
 });
 
+const locationSchema = new mongoose.Schema({
+  city: {
+    type: String,
+    trim: true,
+    required: true,
+  },
+  coordinates: {
+    type: [Number],
+    required: true,
+  },
+});
+
 const tripSchema = new mongoose.Schema(
   {
     title: {
@@ -60,14 +72,6 @@ const tripSchema = new mongoose.Schema(
     bestTimeToVisit: {
       type: [String],
       required: [true, "Best time to visit is required"],
-      // enum: {
-      //   values: ["Spring", "Summer", "Fall", "Winter"],
-      //   message: "{VALUE} is not a valid season",
-      // },
-      // validate: {
-      //   validator: (arr) => Array.isArray(arr) && arr.length > 0,
-      //   message: "Best time to visit must have at least one season",
-      // },
     },
     images: {
       type: [String],
@@ -78,7 +82,7 @@ const tripSchema = new mongoose.Schema(
       },
     },
     location: {
-      type: String,
+      type: locationSchema,
       required: [true, "Location is required"],
       trim: true,
     },
@@ -91,8 +95,8 @@ const tripSchema = new mongoose.Schema(
       type: Date,
     },
     interests: {
-      type: [String],
-      required: [true, "At least one interest is required"],
+      type: String,
+      required: [true, "Interest is required"],
       enum: {
         values: [
           "Food & Culinary",
@@ -106,10 +110,6 @@ const tripSchema = new mongoose.Schema(
           "Local Experiences",
         ],
         message: "{VALUE} is not a valid interest",
-      },
-      validate: {
-        validator: (arr) => Array.isArray(arr) && arr.length > 0,
-        message: "Interests cannot be empty",
       },
     },
     travelStyles: {

@@ -7,7 +7,7 @@ const useAxios = () => {
 
     const axiosInstance = axios.create({
         baseURL: "http://localhost:5100",
-        timeout: 10000,
+        // timeout: 10000,
         headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
@@ -37,12 +37,10 @@ const useAxios = () => {
                 originalRequest._retry = true;
 
                 try {
-                    const refresh = await axios.get("http://localhost:5100/api/refresh" ,{withCredentials: true});
-                    console.log(refresh.data);
+                    const refresh = await axios.get("http://localhost:5100/api/refresh", { withCredentials: true });
 
                     const newToken = refresh.data.newAccessToken;
                     settoken(refresh.data.newAccessToken);
-                    console.log(newToken)
 
                     originalRequest.headers.Authorization = `Bearer ${newToken}`;
                     return axiosInstance(originalRequest);

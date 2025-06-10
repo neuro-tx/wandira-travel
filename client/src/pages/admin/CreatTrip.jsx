@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import Button from '../../components/Button';
 import { Map, Telescope } from 'lucide-react';
@@ -8,36 +8,72 @@ import {
   interests,
   groupTypes,
   countries,
-  tripDurations,
-  prompt,
+  tripDurations
 } from '../../constants/trip';
 import { TRIP_API } from '../../apis/api';
 import useAxios from '../../utils/useAxios';
-
+import Popup from '../../components/Popup';
+import { useNavigate } from "react-router"
 
 const CreatTrip = () => {
-  const [counrty, setCounrty] = useState("");
+  const [country, setCountry] = useState("");
   const [groupType, setGroupType] = useState("")
   const [interest, setInterest] = useState("")
   const [duration, setDuration] = useState("")
   const [style, setStyle] = useState("");
   const [genrating, setGenrating] = useState(false);
   const axiosInstance = useAxios();
+  const [status, setStatus] = useState({});
+  const [popupMess, setPopupMess] = useState(false);
+  const navgiate = useNavigate();
 
   const genrateTrip = async () => {
-    const sendForm = await axiosInstance.post(TRIP_API, JSON.stringify(
-      counrty,
-      groupType,
-      interest,
-      duration,
-      style,
-    ));
+    setGenrating(true);
+    setPopupMess(false);
+    try {
+      const response = await axiosInstance.post(TRIP_API,
+        JSON.stringify({
+          country,
+          groupType,
+          interest,
+          duration,
+          style,
+        })
+      );
+      setStatus({
+        message: response.data.message,
+        code: response.data.stateCode,
+      })
+    } catch (error) {
+      console.log(error)
+      setStatus({
+        message: error.message,
+      })
+    } finally {
+      setGenrating(false);
+      setPopupMess(true);
+    }
   }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setPopupMess(false);
+      status.code === 201 ? navgiate("/admin/trips") : ""
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [status])
 
   return (
     <div className='relative'>
       {genrating && (
         <Loader />
+      )}
+      {popupMess && (
+        <Popup
+          code={status.code}
+          message={status.message}
+        />
       )}
       <div className="flex-between w-full flex-col sm:flex-row">
         <Header
@@ -61,7 +97,7 @@ const CreatTrip = () => {
             label="country"
             placeholder="select a country..."
             options={countries}
-            onchange={(val) => setCounrty(val)}
+            onchange={(val) => setCountry(val)}
           />
           <ComboBoxField
             label="travel style"

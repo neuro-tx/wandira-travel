@@ -75,6 +75,16 @@ export const tripDurations = [
   "More than 30 days",
 ];
 
+// export const tripDurations = [
+//   { label: "1–3 days", value: 3 },
+//   { label: "4–7 days", value: 7 },
+//   { label: "8–14 days", value: 14 },
+//   { label: "15–21 days", value: 21 },
+//   { label: "22–30 days", value: 30 },
+//   { label: "More than 30 days", value: 35 },
+// ];
+
+
 export const prompt = (
   numberOfDays,
   country,

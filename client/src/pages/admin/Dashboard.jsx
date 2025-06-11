@@ -14,7 +14,7 @@ const Dashboard = () => {
     navigate("/admin/create-trip")
   }
   return (
-    <div className='relative'>
+    <div className='relative px-5'>
       <div className="flex-between w-full flex-col sm:flex-row">
         <Header
           title={`welcom ${user?.name.split(" ")[0]} 👋`}

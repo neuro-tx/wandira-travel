@@ -65,7 +65,7 @@ const CreatTrip = () => {
   }, [status])
 
   return (
-    <div className='relative'>
+    <div className='relative px-5'>
       {genrating && (
         <Loader />
       )}

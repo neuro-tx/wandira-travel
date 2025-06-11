@@ -1,17 +1,17 @@
 import React from 'react'
 import { MapPin } from 'lucide-react';
-import { Link ,useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
+import Button from './Button';
+import { Navigation } from 'lucide-react';
 
-const TripCard = ({ country, city, groupType, image, title, price, interest, style ,id }) => {
+const TripCard = ({ country, city, groupType, image, title, price, interest, style, id }) => {
     const navigate = useNavigate();
     const showTrip = (tripId) => {
         navigate(`/admin/trips/${tripId}`)
     }
     return (
-        <Link 
-          className='relative rounded-lg overflow-hidden shadow-100 pb-2'
-          to={`/admin/trips/${id}`}
-        //   onClick={showTrip(id)}  
+        <div
+            className='rounded-lg overflow-hidden shadow-400 flex flex-col w-full duration-2 hover:shadow-100'
         >
             <div className="w-full max-h-48 h-full rounded-t-lg relative">
                 <img
@@ -28,26 +28,35 @@ const TripCard = ({ country, city, groupType, image, title, price, interest, sty
                     <h2 className="text-dark-200 text-lg md:text-xl font-bold font-karla overflow-ellipsis line-clamp-2">
                         {title}
                     </h2>
-                    <div className="flex-center mt-1 text-ligh-200 text-sm">
-                        <MapPin size={20} />
-                        <p className="flex-center gap-1 ml-2">
-                            <span>{country} ,</span>
-                            <span>{" "}{city}</span>
+                    <div className="flex-center mt-1 text-ligh-200 overflow-ellipsis line-clamp-1">
+                        <MapPin size={18} />
+                        <p className="flex-center gap-1 text-xs ml-2">
+                            <span className='overflow-ellipsis line-clamp-1'>{country} ,{" "}{city}</span>
                         </p>
                     </div>
                 </div>
-                <div className="flex-center gap-1.5 px-3 mt-3">
-                    <span className="!bg-primary-50 !text-primary-400 font-semibold font-recursive px-3 py-1 rounded-lg text-sm">
+                <div className="flex flex-wrap items-center gap-1.5 px-3 mt-3">
+                    <span className="bg-primary-50 text-primary-400 font-semibold font-recursive px-3 py-1 rounded-full text-sm truncate max-w-full duration-2 hover:text-white hover:bg-primary-400 cursor-pointer">
                         {groupType}
                     </span>
 
-                    <span className="!bg-pink-50 !text-pink-500 px-3 py-1 rounded-full font-semibold text-sm">
+                    <span className="bg-pink-50 text-pink-500 px-3 py-1 rounded-full font-semibold text-sm truncate max-w-full duration-2 hover:text-white hover:bg-pink-500 cursor-pointer">
                         {style}
                     </span>
                 </div>
+
             </div>
 
-        </Link>
+            <div className="w-full px-3 mb-3 mt-1">
+                <Button
+                    title="show trip details"
+                    leftIcon={<Navigation size={19} />}
+                    classContainer={"w-full py-3 bg-primary-200 flex-center gap-1.5 text-white rounded-md hover:bg-primary-400 active:bg-primary-300 duration-2 justify-center"}
+                    func={() => showTrip(id)}
+                />
+            </div>
+
+        </div>
     )
 }
 

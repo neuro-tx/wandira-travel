@@ -67,7 +67,7 @@ const AdminLayout = () => {
     }
 
     return (
-        <div className='w-screen min-h-dvh'>
+        <div className='w-full min-h-dvh overflow-x-hidden'>
             {openConfirm && (
                 <ConfirmBox
                     title="Log out"
@@ -98,9 +98,9 @@ const AdminLayout = () => {
                 />
             </div>
 
-            <main className={cn("md:ml-52 lg:ml-64 duration-2 min-h-dvh bg-ligh-100")}>
+            <main className="md:ml-52 lg:ml-64 duration-2 bg-ligh-100">
                 <MobileNavBar />
-                <main className='px-5'>
+                <main className='min-h-screen w-full !overflow-x-hidden overflow-y-auto'>
                     <Outlet />
                 </main>
             </main>

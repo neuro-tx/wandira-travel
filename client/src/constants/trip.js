@@ -25,7 +25,6 @@ export const travelStyles = [
   "Island Hopping",
 ];
 
-
 export const interests = [
   "Food & Culinary",
   "Historical Sites",
@@ -57,50 +56,87 @@ export const interests = [
   "Volunteering",
 ];
 
-
 export const groupTypes = ["Solo", "Couple", "Family", "Friends", "Business"];
 
 export const countries = [
-  "United States",
-  "Canada",
-  "Mexico",
   "Brazil",
-  "Argentina",
-  "United Kingdom",
+  "Ireland",
+  "Czech Republic",
+  "Morocco",
+  "Turkey",
+  "Austria",
+  "Vietnam",
+  "Fiji",
+  "Malta",
+  "South Korea",
+  "Ethiopia",
   "France",
   "Germany",
-  "Italy",
-  "Spain",
-  "Portugal",
-  "Netherlands",
-  "Switzerland",
-  "Sweden",
-  "Norway",
-  "Greece",
-  "Turkey",
-  "Egypt",
-  "South Africa",
-  "United Arab Emirates",
-  "India",
   "Thailand",
-  "Vietnam",
-  "Japan",
-  "South Korea",
-  "China",
-  "Australia",
+  "Dominican Republic",
+  "Seychelles",
+  "Egypt",
+  "Jamaica",
   "New Zealand",
-  "Indonesia",
-  "Malaysia",
-  "Philippines",
-  "Singapore",
-  "Morocco",
-  "Kenya",
-  "Peru",
+  "Slovenia",
+  "Mexico",
+  "Monaco",
+  "Canada",
   "Colombia",
-  "Costa Rica",
-  "Iceland",
+  "Indonesia",
+  "Nepal",
+  "Portugal",
+  "Peru",
+  "Argentina",
+  "India",
+  "Tanzania",
   "Croatia",
-  "Poland",
+  "Costa Rica",
+  "Australia",
+  "Singapore",
+  "Japan",
+  "Malaysia",
+  "Iceland",
+  "South Africa",
+  "Spain",
+  "Switzerland",
+  "Kenya",
+  "Hungary",
+  "Philippines",
+  "United States",
+  "Norway",
+  "United Kingdom",
+  "Panama",
+  "Georgia",
+  "Uzbekistan",
+  "Slovakia",
+  "Taiwan",
+  "Bolivia",
+  "Saudi Arabia",
+  "Qatar",
+  "Vanuatu",
+  "Madagascar",
+  "Oman",
+  "Laos",
+  "Cambodia",
+  "Sweden",
+  "Netherlands",
+  "Uruguay",
+  "Greece",
+  "Papua New Guinea",
+  "Kazakhstan",
+  "Bahrain",
+  "Belgium",
+  "Tonga",
+  "Rwanda",
+  "Ghana",
+  "Mauritius",
+  "Luxembourg",
+  "Chile",
+  "Scotland",
+  "China",
+  "Bahamas",
+  "Sri Lanka",
 ];
 
 export const tripDurations = [
@@ -111,16 +147,6 @@ export const tripDurations = [
   "22-30 days",
   "More than 30 days",
 ];
-
-// export const tripDurations = [
-//   { label: "1–3 days", value: 3 },
-//   { label: "4–7 days", value: 7 },
-//   { label: "8–14 days", value: 14 },
-//   { label: "15–21 days", value: 21 },
-//   { label: "22–30 days", value: 30 },
-//   { label: "More than 30 days", value: 35 },
-// ];
-
 
 export const prompt = (
   numberOfDays,
@@ -175,7 +201,7 @@ export const prompt = (
     }`;
 };
 
-// export const respo = 
+// export const respo =
 // ```json
 // {
 //   "name": "Luxury Coastal Escape in Tofino, British Columbia",

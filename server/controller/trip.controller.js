@@ -34,7 +34,7 @@ const addTrip = asyncWrapper(async (req, res) => {
     }
 
     const imageResponse = await fetch(
-      `https://api.unsplash.com/search/photos?query=${country} ${interest} ${style} ${groupType}&client_id=${process.env.UNSPLASH_ACCESS_KEY}`
+      `https://api.unsplash.com/search/photos?query=${country} ${interest} ${style}&client_id=${process.env.UNSPLASH_ACCESS_KEY}`
     );
 
     if (!imageResponse.ok) {

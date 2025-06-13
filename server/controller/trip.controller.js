@@ -6,7 +6,6 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const parsMarkDownToJson = require("../utils/markDownParser");
 const genAI = new GoogleGenerativeAI(process.env.GENRATE_KEY);
 
-
 const getAllTrips = asyncWrapper(async (req, res) => {
   const trips = await Trip.find();
   if (!trips) {
@@ -29,29 +28,36 @@ const addTrip = asyncWrapper(async (req, res) => {
     const newTrip = parsMarkDownToJson(response.text());
 
     if (!newTrip) {
-      return res.status(400).json(dataform("fail", 400, "Failed to generate trip data."));
+      return res
+        .status(400)
+        .json(dataform("fail", 400, "Failed to generate trip data."));
     }
 
     const imageResponse = await fetch(
-      `https://api.unsplash.com/search/photos?query=${country} ${interest} ${style}&client_id=${process.env.UNSPLASH_ACCESS_KEY}`
+      `https://api.unsplash.com/search/photos?query=${country} ${interest} ${style} ${groupType}&client_id=${process.env.UNSPLASH_ACCESS_KEY}`
     );
 
     if (!imageResponse.ok) {
-      return res.status(500).json(dataform("fail", 500, "Failed to fetch images from Unsplash."));
+      return res
+        .status(500)
+        .json(dataform("fail", 500, "Failed to fetch images from Unsplash."));
     }
 
     const imgData = await imageResponse.json();
-    const images = imgData.results.slice(0, 3).map((item) => item.urls?.regular);
+    const images = imgData.results
+      .slice(0, 3)
+      .map((item) => item.urls?.regular);
 
     const trip = await Trip.create({ ...newTrip, images });
 
-    return res.status(201).json(dataform("success", 201, "Trip generated successfully.", trip));
+    return res
+      .status(201)
+      .json(dataform("success", 201, "Trip generated successfully.", trip));
   } catch (error) {
     console.error("Error in addTrip:", error.message);
     return res.status(500).json(dataform("fail", 500, error.message));
   }
 });
-
 
 const getTripById = asyncWrapper(async (req, res) => {
   const trips = await Trip.findById(req.params.id);

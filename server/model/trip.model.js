@@ -97,31 +97,9 @@ const tripSchema = new mongoose.Schema(
     interests: {
       type: String,
       required: [true, "Interest is required"],
-      enum: {
-        values: [
-          "Food & Culinary",
-          "Historical Sites",
-          "Hiking & Nature Walks",
-          "Beaches & Water Activities",
-          "Museums & Art",
-          "Nightlife & Bars",
-          "Photography Spots",
-          "Shopping",
-          "Local Experiences",
-        ],
-        message: "{VALUE} is not a valid interest",
-      },
     },
     travelStyles: {
       type: String,
-      enum: [
-        "Relaxed",
-        "Luxury",
-        "Adventure",
-        "Cultural",
-        "Nature & Outdoors",
-        "City Exploration",
-      ],
       required: [true, "Travel style is required"],
       trim: true,
     },

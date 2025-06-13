@@ -5,7 +5,26 @@ export const travelStyles = [
   "Cultural",
   "Nature & Outdoors",
   "City Exploration",
+  "Road Trip",
+  "Eco & Sustainable",
+  "Spiritual & Wellness",
+  "Backpacking",
+  "Cruise",
+  "Safari",
+  "Volunteer Travel",
+  "Festival & Events",
+  "Photography Tour",
+  "Food & Culinary",
+  "Historical Journey",
+  "Wildlife Exploration",
+  "Beach Getaway",
+  "Sports & Fitness",
+  "Family Friendly",
+  "Romantic Escape",
+  "Snow & Ski",
+  "Island Hopping",
 ];
+
 
 export const interests = [
   "Food & Culinary",
@@ -17,9 +36,27 @@ export const interests = [
   "Photography Spots",
   "Shopping",
   "Local Experiences",
+  "Wildlife & Safari",
+  "Festivals & Events",
+  "Spiritual & Religious Sites",
+  "Architecture & Design",
+  "Sports & Adventure",
+  "Wellness & Spa",
+  "Music & Concerts",
+  "Crafts & Artisans",
+  "Theater & Performances",
+  "Snow Sports",
+  "Desert Exploration",
+  "Island Exploration",
+  "Caves & Natural Wonders",
+  "Castles & Palaces",
+  "Tech & Innovation Tours",
+  "Agritourism & Farms",
+  "Street Art & Graffiti",
+  "Wine & Brewery Tours",
+  "Volunteering",
 ];
 
-export const budgetOptions = ["Budget", "Mid-range", "Luxury", "Premium"];
 
 export const groupTypes = ["Solo", "Couple", "Family", "Friends", "Business"];
 

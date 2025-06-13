@@ -5,30 +5,9 @@ const tripValidationSchema = Joi.object({
 
   duration: Joi.string().trim().required(),
 
-  interest: Joi.string()
-    .valid(
-      "Food & Culinary",
-      "Historical Sites",
-      "Hiking & Nature Walks",
-      "Beaches & Water Activities",
-      "Museums & Art",
-      "Nightlife & Bars",
-      "Photography Spots",
-      "Shopping",
-      "Local Experiences"
-    )
-    .required(),
+  interest: Joi.string().required(),
 
-  style: Joi.string()
-    .valid(
-      "Relaxed",
-      "Luxury",
-      "Adventure",
-      "Cultural",
-      "Nature & Outdoors",
-      "City Exploration"
-    )
-    .required(),
+  style: Joi.string().required(),
 
   groupType: Joi.string()
     .valid("Solo", "Couple", "Family", "Friends", "Business")

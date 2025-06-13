@@ -7,7 +7,7 @@ const useAxios = () => {
 
     const axiosInstance = axios.create({
         baseURL: "http://localhost:5100",
-        // timeout: 10000,
+        // timeout: 20000,
         headers: {
             "Content-Type": "application/json",
             Accept: "application/json",

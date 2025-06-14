@@ -4,7 +4,6 @@ const dataform = require("../utils/dataForm");
 const bcrypt = require("bcrypt");
 const genrateToken = require("../utils/genrateToken");
 
-
 const getAllUsers = asyncWrapper(async (req, res) => {
   const allUser = await User.find().select("-password").populate("trips");
   if (!allUser) {
@@ -118,6 +117,11 @@ const updateUserData = asyncWrapper(async (req, res) => {
 
 const deleteUser = asyncWrapper(async (req, res) => {
   const delUser = await User.deleteOne({ _id: req.params.id });
+  res.clearCookie("refresh-token", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: false,
+  });
 
   res.status(201).json(dataform("success", 201, "user deleted successfully"));
 });

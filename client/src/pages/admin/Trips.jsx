@@ -89,16 +89,3 @@ const Trips = () => {
 }
 
 export default Trips
-
-{/* <TripCard
-                        key={trip._id}
-                        id={trip._id}
-                        country={trip.country}
-                        city={trip.location.city}
-                        groupType={trip.groupTypes}
-                        image={trip.images[0]}
-                        title={trip.title}
-                        price={trip.price}
-                        interest={trip.interests}
-                        style={trip.travelStyles}
-                    /> */}

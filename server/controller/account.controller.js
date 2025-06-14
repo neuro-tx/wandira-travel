@@ -16,14 +16,16 @@ const getAccount = asyncWrapper(async (req, res) => {
       .select("-password")
       .populate("trips")
       .populate("booking");
-    if (!user) res.status(404).json(dataform("faild", 404, "invalid user id"));
+    if (!user) {
+      return res.status(404).json(dataform("faild", 404, "invalid user id"));
+    }
 
     const token = genrateToken({
       id: user._id,
       role: user.role,
     });
 
-    res.status(200).json(
+    return res.status(200).json(
       dataform("success", 200, "successfully operation", {
         token,
         _id: user._id,

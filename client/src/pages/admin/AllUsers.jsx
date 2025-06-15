@@ -1,17 +1,14 @@
-import { useEffect, useState } from 'react'
-import Button from '../../components/Button'
+import { useEffect, useState, useRef } from 'react'
 import Header from '../../components/Header'
 import useAxios from '../../utils/useAxios'
 import Spinear from '../../components/loaders/Spinear'
 import { USERS_API } from '../../apis/api'
 import { cn } from '../../utils/util'
-import { Trash2, Plus } from 'lucide-react';
 import Popup from '../../components/Popup'
 import Loader from '../../components/loaders/Loader'
-import ConfirmBox from '../../components/ConfirmBox'
+import UserModel from '../../components/UserModel'
 
 const AllUsers = () => {
-  const addUser = () => { }
   const axiosInstance = useAxios();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMess, setErrorMess] = useState("")
@@ -19,6 +16,22 @@ const AllUsers = () => {
   const [state, setstate] = useState({})
   const [delLoading, setDelLoading] = useState(false);
   const [popupMess, setPopupMess] = useState(false);
+  const [updateUser, setUpdateUser] = useState(false)
+  const [userData, setUserData] = useState(null);
+  const modelRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutModel = (e) => {
+      if (updateUser && modelRef.current && !modelRef.current.contains(e.target)) {
+        setUpdateUser(false)
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutModel)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutModel)
+    }
+  }, [updateUser])
 
   const fetchUsers = async () => {
     setIsLoading(true);
@@ -45,6 +58,7 @@ const AllUsers = () => {
     } finally {
       setDelLoading(false)
       setPopupMess(true)
+      setUpdateUser(false);
     }
   };
 
@@ -60,7 +74,12 @@ const AllUsers = () => {
     return () => { clearTimeout(timer) }
   }, [state])
 
-  const tableHead = ["User", "Email", "Role", "Bookings", "Trips", "Joined At", "Operations"]
+  const tableHead = ["User", "Email", "Role", "Bookings", "Trips", "Joined At"]
+
+  const editUser = (user) => {
+    setUpdateUser(true);
+    setUserData(user);
+  }
 
   if (isLoading) {
     return (
@@ -85,17 +104,27 @@ const AllUsers = () => {
           message={state.message}
         />
       )}
+
+      {updateUser && (
+        <div
+          ref={modelRef}
+          className="absolute-center max-w-xl w-full px-5"
+        >
+          <UserModel
+            name={userData.name}
+            email={userData.email}
+            img={userData.image}
+            role={userData.role}
+            id={userData._id}
+            deleteUser={delUser}
+          />
+        </div>
+      )}
+
       <div className="flex-between w-full flex-col sm:flex-row px-5">
         <Header
           title={`users managment`}
           description={"you have all access on users ,manage ,add ,delete ,sort ,filter etc..."}
-        />
-        <Button
-          title="add new user"
-          classContainer="bg-primary-200 rounded-md text-white flex-center gap-1.5 hover:bg-primary-400 whitespace-nowrap justify-center"
-          leftIcon={<Plus size={19} />}
-          topClass={"sm:w-fit shadow-100 rounded-lg"}
-          func={addUser}
         />
       </div>
 
@@ -131,14 +160,15 @@ const AllUsers = () => {
                 {users.map((user) => (
                   <tr
                     key={user._id}
-                    className="duration-2 hover:bg-ligh-50 w-full font-karla text-sm md:text-base text-gray-600"
+                    className="duration-2 hover:bg-ligh-50 w-full font-karla text-sm md:text-base text-gray-600 cursor-pointer even:bg-slate-50"
+                    onClick={() => editUser(user)}
                   >
                     <td className='py-1 px-3 rounded-l-lg'>
                       <div className="flex-center gap-1.5">
                         <img
                           src={user.image || "/assets/images/dummy.jpg"}
                           alt={user.name}
-                          className='size-8 rounded-full object-cover hidden md:inline'
+                          className='size-8 rounded-full object-cover aspect-square'
                           loading="lazy"
                         />
                         <span className="capitalize font-semibold">
@@ -170,14 +200,6 @@ const AllUsers = () => {
                         month: "long",
                         day: "numeric",
                       })}
-                    </td>
-                    <td className="py-1 px-3 rounded-r-lg text-center">
-                      <button
-                        className='p-1 rounded-full border border-red-300 text-red-500 cursor-pointer duration-2 hover:bg-red-500 hover:text-white'
-                        onClick={() => delUser(user._id)}
-                      >
-                        <Trash2 size={18} />
-                      </button>
                     </td>
                   </tr>
                 ))}

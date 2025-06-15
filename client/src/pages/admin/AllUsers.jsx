@@ -81,7 +81,7 @@ const AllUsers = () => {
     return () => { clearTimeout(timer) }
   }, [state])
 
-  const tableHead = ["User", "Email", "Role", "Bookings", "Trips", "Joined At"]
+  const tableHead = ["ID" ,"User", "Email", "Role", "Bookings", "Joined At"]
 
   const editUser = (user) => {
     setUpdateUser(true);
@@ -171,6 +171,9 @@ const AllUsers = () => {
                     className="duration-2 hover:bg-ligh-50 w-full font-karla text-sm md:text-base text-gray-600 cursor-pointer even:bg-slate-50"
                     onClick={() => editUser(user)}
                   >
+                    <td className="py-1 px-3 rounded-l-lg">
+                      {(user._id).slice(0 ,6)}...
+                    </td>
                     <td className='py-1 px-3 rounded-l-lg'>
                       <div className="flex-center gap-1.5">
                         <img
@@ -193,13 +196,8 @@ const AllUsers = () => {
                       </span>
                     </td>
                     <td className="py-1 px-3">
-                      <span className={cn("py-1 px-3 text-white  rounded-full", user.booking.length <= 5 ? "bg-rose-500" : "bg-primary-100")}>
-                        {user.booking.length}
-                      </span>
-                    </td>
-                    <td className="py-1 px-3">
-                      <span className={cn("py-1 px-3 text-white  rounded-full", user.trips.length <= 5 ? "bg-rose-500" : "bg-primary-100")}>
-                        {user.trips.length}
+                      <span className={cn("py-1 px-3 text-white  rounded-full", user.bookings.length <= 5 ? "bg-rose-500" : "bg-primary-100")}>
+                        {user.bookings.length}
                       </span>
                     </td>
                     <td className="py-1 px-3 text-sm font-semibold whitespace-nowrap">

@@ -3,15 +3,33 @@ const User = require("../model/user.model");
 const dataform = require("../utils/dataForm");
 const bcrypt = require("bcrypt");
 const genrateToken = require("../utils/genrateToken");
+const Booking = require("../model/booking.model");
 
 const getAllUsers = asyncWrapper(async (req, res) => {
-  const allUser = await User.find().select("-password").populate("trips");
-  if (!allUser) {
-    res.status(404).json(dataform("faild", 404, "no users found"));
+  try {
+    const allUsers = await User.find().select("-password");
+    const usersData = await Promise.all(
+      allUsers.map(async (user) => {
+        const userBookings = await Booking.find({ user_id: user._id }).populate(
+          "trip_id",
+          "title price seats duration location country"
+        );
+
+        return {
+          ...user.toObject(),
+          bookings: userBookings,
+        };
+      })
+    );
+
+    return res
+      .status(200)
+      .json(dataform("success", 200, "successfully operation", usersData));
+  } catch (error) {
+    return res
+      .status(500)
+      .json(dataform("error", 500, "Internal server error"));
   }
-  return res
-    .status(200)
-    .json(dataform("success", 200, "successfully operation", allUser));
 });
 
 const addUser = asyncWrapper(async (req, res) => {
@@ -93,9 +111,7 @@ const addUser = asyncWrapper(async (req, res) => {
 });
 
 const getUserById = asyncWrapper(async (req, res) => {
-  const users = await User.findById(req.params.id)
-    .select("-password")
-    .populate("trips");
+  const users = await User.findById(req.params.id);
   if (!users) res.status(404).json(dataform("faild", 404, "invalid user id"));
 
   res

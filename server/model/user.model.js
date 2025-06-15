@@ -32,19 +32,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["admin", "user"],
       default: "user",
-    },
-    trips: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Trip",
-      },
-    ],
-    booking: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Booking",
-      },
-    ]
+    }
   },
   {
     timestamps: true,

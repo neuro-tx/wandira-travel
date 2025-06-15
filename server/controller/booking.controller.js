@@ -16,9 +16,19 @@ const getAllBookings = asyncWrapper(async (req, res) => {
 });
 
 const addBooking = asyncWrapper(async (req, res) => {
+  const { user_id, trip_id } = req.body;
+  const existingBooking = await Booking.findOne({ user_id, trip_id });
+  if (existingBooking) {
+    return res
+      .status(400)
+      .json(dataform("faild", 400, "You already booked this trip."));
+  }
+
   const newBook = await Booking.create(req.body);
   if (!newBook) {
-    return res.status(400).json(dataform("faild", 400, "falid operation ,try again"));
+    return res
+      .status(400)
+      .json(dataform("faild", 400, "falid operation ,try again"));
   }
   return res
     .status(201)

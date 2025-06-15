@@ -42,10 +42,9 @@ const Trips = () => {
                 code: response.data.stateCode,
                 message: response.data.message
             });
-            console.log(response.data)
         } catch (error) {
             setStatus({
-                message: error.message
+                message: error.response.data.message
             });
         } finally {
             setbooking(true)

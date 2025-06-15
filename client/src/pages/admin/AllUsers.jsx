@@ -174,7 +174,7 @@ const AllUsers = () => {
                     <td className="py-1 px-3 rounded-l-lg">
                       {(user._id).slice(0 ,6)}...
                     </td>
-                    <td className='py-1 px-3 rounded-l-lg'>
+                    <td className='py-1 px-3'>
                       <div className="flex-center gap-1.5">
                         <img
                           src={user.image || "/assets/images/dummy.jpg"}

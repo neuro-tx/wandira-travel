@@ -15,13 +15,12 @@ const bookingValidationSchema = Joi.object({
     .valid("pending", "confirmed", "cancelled")
     .default("pending"),
 
-  booked_at: Joi.date().optional(),
 
-  number_of_seats: Joi.number().integer().min(1).required().messages({
-    "number.base": "Number of seats must be a number",
-    "number.min": "At least 1 seat must be booked",
-    "any.required": "Number of seats is required",
-  }),
+  // number_of_seats: Joi.number().integer().min(1).required().messages({
+  //   "number.base": "Number of seats must be a number",
+  //   "number.min": "At least 1 seat must be booked",
+  //   "any.required": "Number of seats is required",
+  // }),
 });
 
 module.exports = bookingValidationSchema;

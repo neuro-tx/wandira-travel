@@ -29,7 +29,7 @@ const Popup = ({message ,code}) => {
 
     }
     return (
-        <div className='w-sm md:w-lg p-5 py-4 rounded-lg shadow-100 absolute top-6 left-1/2 -translate-x-1/2 duration-3 bg-white animated z-[9999]'>
+        <div className='w-sm md:w-lg p-5 py-4 rounded-lg shadow-100 fixed top-6 left-1/2 -translate-x-1/2 duration-3 bg-white animated z-[9999]'>
             <div className="w-full relative">
                 <div className="flex-center gap-2">
                     <div className={cn("size-8 rounded-full grid place-items-center aspect-square", style)}>

@@ -1,14 +1,15 @@
 import React from 'react'
-import { MapPin } from 'lucide-react';
+import { CircleFadingPlus, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router'
 import Button from './Button';
 import { Navigation } from 'lucide-react';
 
-const TripCard = ({ country, city, groupType, image, title, price, interest, style, id }) => {
+const TripCard = ({ country, city, groupType, image, title, price, interest, style, id ,bookFunc }) => {
     const navigate = useNavigate();
     const showTrip = (tripId) => {
         navigate(`/admin/trips/${tripId}`)
     }
+
     return (
         <div
             className='rounded-lg overflow-hidden shadow-400 flex flex-col w-full duration-2 hover:shadow-100'
@@ -17,7 +18,7 @@ const TripCard = ({ country, city, groupType, image, title, price, interest, sty
                 <img
                     src={image}
                     alt={`${country}-${interest}`}
-                    className="size-full object-cover rounded-t-lg"
+                    className="h-full max-w-full w-full object-cover rounded-t-lg"
                 />
                 <span className="absolute top-2 right-5 px-3 py-1 bg-white rounded-full text-sm font-semibold text-primary-400 font-karla">
                     {price} $
@@ -53,6 +54,12 @@ const TripCard = ({ country, city, groupType, image, title, price, interest, sty
                     leftIcon={<Navigation size={19} />}
                     classContainer={"w-full py-3 bg-primary-200 flex-center gap-1.5 text-white rounded-md hover:bg-primary-400 active:bg-primary-300 duration-2 justify-center"}
                     func={() => showTrip(id)}
+                />
+                <Button
+                    title="book trip"
+                    leftIcon={<CircleFadingPlus size={19} />}
+                    classContainer={"w-full py-3 bg-dark-100 flex-center gap-1.5 text-white rounded-md hover:bg-dark-300 active:bg-dark-200 duration-2 justify-center mt-1.5"}
+                    func={() => bookFunc()}
                 />
             </div>
 

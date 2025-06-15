@@ -1,19 +1,22 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router'
 import Header from '../../components/Header'
 import Button from '../../components/Button'
 import { Map } from 'lucide-react'
 import useAxios from '../../utils/useAxios'
-import { TRIP_API } from '../../apis/api';
+import { BOOKING_API, TRIP_API } from '../../apis/api';
 import TripCard from '../../components/TripCard'
 import Spinear from '../../components/loaders/Spinear'
-
+import { useAuth } from '../../contexts/shared/Auth'
+import Popup from '../../components/Popup';
 
 const Trips = () => {
     const axiosInstance = useAxios();
     const [trips, setTrips] = useState([]);
     const [errorMess, setErrorMess] = useState("")
     const [isLoading, setIsLoading] = useState(false);
+    const { user } = useAuth();
+    const [booking, setbooking] = useState(false);
+    const [status, setStatus] = useState({})
 
     const fetchTrips = async () => {
         setIsLoading(true);
@@ -28,9 +31,39 @@ const Trips = () => {
         }
     };
 
+    const bookTrip = async (tripId) => {
+        setbooking(false)
+        try {
+            const response = await axiosInstance.post(BOOKING_API, JSON.stringify({
+                user_id: user._id,
+                trip_id: tripId
+            }));
+            setStatus({
+                code: response.data.stateCode,
+                message: response.data.message
+            });
+            console.log(response.data)
+        } catch (error) {
+            setStatus({
+                message: error.message
+            });
+        } finally {
+            setbooking(true)
+        }
+    }
+
     useEffect(() => {
         fetchTrips();
     }, []);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setbooking(false);
+        }, 1500);
+
+        return () => clearTimeout(timer);
+    }, [booking])
+
     if (isLoading) {
         return (
             <div className="h-dvh w-full">
@@ -42,7 +75,13 @@ const Trips = () => {
     }
 
     return (
-        <div className='w-full relative px-5 min-h-lvh'>
+        <div className='w-full relative px-5 pr-9 min-h-lvh'>
+            {booking && (
+                <Popup
+                    message={status.message}
+                    code={status.code}
+                />
+            )}
             <div className="flex-between w-full flex-col sm:flex-row px-3">
                 <Header
                     title={`add new trip`}
@@ -80,6 +119,7 @@ const Trips = () => {
                             price={trip.price}
                             interest={trip.interests}
                             style={trip.travelStyles}
+                            bookFunc={() => bookTrip(trip._id)}
                         />
                     ))}
                 </div>

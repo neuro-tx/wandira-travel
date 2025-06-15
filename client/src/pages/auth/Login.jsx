@@ -57,7 +57,7 @@ const Login = () => {
 
       } catch (err) {
         // console.error('Registration failed:', err.response?.data.message || err.message);
-        setresData(err.response?.data || {message: "Login failed. Please try again."})
+        setresData(err.response?.data.message || {message: "Login failed. Please try again."})
       } finally {
         setloading(false);
       }

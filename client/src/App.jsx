@@ -34,7 +34,7 @@ const AppContent = () => {
         login(response.data.data)
         return
       } catch (error) {
-        console.error("Failed to fetch user data:", error);
+        console.error("Failed to fetch user data:", error.message);
       }
     };
 

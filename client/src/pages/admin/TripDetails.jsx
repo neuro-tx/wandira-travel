@@ -43,7 +43,7 @@ const TripDetails = () => {
     }
 
     return (
-        <div className='px-5 relative'>
+        <div className='px-5 pr-9 relative'>
             <div className="flex-between w-full flex-col sm:flex-row">
                 <Header
                     title={`trips`}
@@ -150,10 +150,10 @@ const TripDetails = () => {
                             </p>
 
                             <ul className="mt-1">
-                                {trip.bestTimeToVisit.map((time ,i) => (
-                                    <li 
-                                      key={i}
-                                      className="pl-2 list-inside list-disc text-base text-ligh-200"
+                                {trip.bestTimeToVisit.map((time, i) => (
+                                    <li
+                                        key={i}
+                                        className="pl-2 list-inside list-disc text-base text-ligh-200"
                                     >
                                         {time}
                                     </li>
@@ -162,9 +162,9 @@ const TripDetails = () => {
                         </div>
 
                         <div className="w-full my-5">
-                            <LeafletMap 
-                              coordinates={trip.location.coordinates}
-                              zoom={4}
+                            <LeafletMap
+                                coordinates={trip.location.coordinates}
+                                zoom={4}
                             />
                         </div>
                     </div>

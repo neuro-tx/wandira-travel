@@ -22,11 +22,11 @@ const bookingSchema = new mongoose.Schema(
       type: Date,
       default: () => new Date(),
     },
-    number_of_seats: {
-      type: Number,
-      required: [true, "Number of seats is required"],
-      min: [1, "You must book at least 1 seat"],
-    },
+    // number_of_seats: {
+    //   type: Number,
+    //   required: [true, "Number of seats is required"],
+    //   min: [1, "You must book at least 1 seat"],
+    // },
   },
   {
     timestamps: true, 

@@ -129,7 +129,7 @@ const AllUsers = () => {
         </div>
       )}
 
-      <div className="flex-between w-full flex-col sm:flex-row px-5">
+      <div className="flex-between w-full flex-col sm:flex-row px-5 pr-9">
         <Header
           title={`users managment`}
           description={"you have all access on users ,manage ,add ,delete ,sort ,filter etc..."}

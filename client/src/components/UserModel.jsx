@@ -4,10 +4,9 @@ import InputField from './InputField'
 import useAxios from '../utils/useAxios';
 import { Upload, Trash2, ShieldCheck } from 'lucide-react';
 import { USERS_API } from '../apis/api';
-import { cn } from '../utils/util';
 
 
-const UserModel = ({ name, email, img, role, id, deleteUser }) => {
+const UserModel = ({ name, email, img, role, id, deleteUser ,setUpdate }) => {
     const axiosInstance = useAxios();
     const [userName, setUserName] = useState(name);
     const [userEmail, setUserEmail] = useState(email);
@@ -22,6 +21,7 @@ const UserModel = ({ name, email, img, role, id, deleteUser }) => {
             return
         };
         setState(false);
+        setUpdate(false);
         try {
             setUpdating(true)
             const response = await axiosInstance.patch(`${USERS_API}/${id}`, JSON.stringify({
@@ -29,8 +29,8 @@ const UserModel = ({ name, email, img, role, id, deleteUser }) => {
                 email: userEmail,
                 role: userRole
             }));
-            console.log(response.data)
             setState({ code: response.data.stateCode, message: response.data.message })
+            setUpdate(true);
         } catch (error) {
             console.error(error)
             setState({ message: error.message })
@@ -44,7 +44,7 @@ const UserModel = ({ name, email, img, role, id, deleteUser }) => {
     };
 
     const makeAdmin = () => {
-        setUserRole("admin");
+        setUserRole((prevRole) => (prevRole === "admin" ? "user" : "admin"));
     }
 
     return (
@@ -111,15 +111,15 @@ const UserModel = ({ name, email, img, role, id, deleteUser }) => {
 
                             />
                             <Button
-                                title="delete user"
+                                title={role === "admin" ? "delete admin" : "delete user"}
                                 leftIcon={<Trash2 size={17} />}
                                 classContainer="flex-center gap-2 center w-full bg-red-200 rounded-lg text-white hover:bg-red-100 py-3"
                                 func={() => delUser()}
                             />
                             <Button
-                                title="make admin"
+                                title={userRole === "admin" ? "make user" : "make admin"}
                                 leftIcon={<ShieldCheck size={18} />}
-                                classContainer={cn("flex-center gap-2 center w-full bg-green-600 rounded-lg text-white hover:bg-green-500 py-3 col-span-2" ,role === "admin" && "opacity-50 pointer-events-none")}
+                                classContainer="flex-center gap-2 center w-full bg-green-600 rounded-lg text-white hover:bg-green-500 py-3 col-span-2"
                                 func={() => makeAdmin()}
                             />
                         </div>

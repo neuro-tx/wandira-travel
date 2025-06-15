@@ -18,6 +18,7 @@ const AllUsers = () => {
   const [popupMess, setPopupMess] = useState(false);
   const [updateUser, setUpdateUser] = useState(false)
   const [userData, setUserData] = useState(null);
+  const [updating, setupdating] = useState(false);
   const modelRef = useRef(null);
 
   useEffect(() => {
@@ -65,6 +66,12 @@ const AllUsers = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  // update user if user is updated
+  useEffect(() => {
+    fetchUsers();    
+  }, [updating])
+  
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -117,6 +124,7 @@ const AllUsers = () => {
             role={userData.role}
             id={userData._id}
             deleteUser={delUser}
+            setUpdate={setupdating}
           />
         </div>
       )}

@@ -13,9 +13,7 @@ const getAccount = asyncWrapper(async (req, res) => {
   try {
     const decoded = jwt.verify(refresh_token, process.env.JWT_REFRESH_TOKEN);
     const user = await User.findById(decoded.id)
-      .select("-password")
-      .populate("trips")
-      .populate("booking");
+      .select("-password");
     if (!user) {
       return res.status(404).json(dataform("faild", 404, "invalid user id"));
     }

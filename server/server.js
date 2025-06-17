@@ -14,6 +14,7 @@ const bookingRouter = require("./routes/booking.route");
 const authRouter = require("./routes/auth.route");
 const refreshRoute = require("./routes/refresh.route");
 const accountRouter = require("./routes/account.route");
+const dashRouter = require("./routes/dashboard.route");
 
 const app = express();
 const limiter = rateLimit({
@@ -40,6 +41,7 @@ app.use("/api/v1/trip", tripRouter);
 app.use("/api/v1/booking", bookingRouter);
 app.use("/api/refresh", refreshRoute);
 app.use("/api/profile", accountRouter);
+app.use("/api/v1/dashboard", dashRouter);
 
 app.use(handler);
 

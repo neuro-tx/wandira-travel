@@ -86,6 +86,10 @@ body,
   }
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 /* ////// */
 .animated{
   animation: popup 0.3s ease-in forwards;

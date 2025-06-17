@@ -10,8 +10,8 @@ The following versions of Wandria Travel are currently supported with security u
 
 | Version | Supported |
 | ------- | --------- |
-| 1.2.x   | ✅ No     |
-| 1.1.x   | ❌ Yes    |
+| 1.2.x   | ❌ No     |
+| 1.1.x   | ❌ No    |
 | 1.0.x   | ✅ Yes     |
 | < 1.0   | ❌ No      |
 

@@ -10,7 +10,7 @@ const {
 
 const getLatestData = asyncWrapper(async (req, res) => {
   // Get bookings data
-  const bookinWeekSummary = await getWeeklySummary(Bookings, "createdAt");
+  const bookinWeekSummary = await getWeeklySummary(Bookings, "booked_at");
   const bookingMonthSummary = await getMonthlySummary(Bookings, "booked_at");
 
   // Get Trips data
@@ -45,7 +45,6 @@ const getLatestData = asyncWrapper(async (req, res) => {
   const totalUsers = await Users.countDocuments();
   const totalTrips = await Trips.countDocuments();
   const totalBookings = await Bookings.countDocuments();
-  console.log(totalUsers, totalTrips, totalBookings);
   const total = {
     users: totalUsers,
     trips: totalTrips,

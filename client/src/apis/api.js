@@ -20,3 +20,5 @@ export const REFRESH_API = "/api/refresh";
 // get user account api
 export const USER_API = "/api/profile";
 
+// get dashboard data
+export const DASHBOARD_API = "/api/v1/dashboard"

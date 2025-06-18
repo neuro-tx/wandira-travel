@@ -5,7 +5,7 @@ const dataform = require("../utils/dataForm");
 const getAllBookings = asyncWrapper(async (req, res) => {
   const bookings = await Booking.find()
     .populate("user_id", "first_name last_name email image")
-    .populate("trip_id", "title price seats duration location country");
+    .populate("trip_id", "title price seats duration location country").limit(15);
 
   if (bookings.length === 0) {
     return res.status(404).json(dataform("faild", 404, "no bookings found"));

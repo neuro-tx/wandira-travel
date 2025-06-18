@@ -6,10 +6,11 @@ import Button from '../../components/Button'
 import { useNavigate } from 'react-router';
 import { staticItem } from '../../constants/dashboard';
 import StaticBox from '../../components/StaticBox';
-import { DASHBOARD_API } from "../../apis/api";
+import { DASHBOARD_API, BOOKING_API } from "../../apis/api";
 import useAxios from '../../utils/useAxios';
 import Loader from "../../components/loaders/Loader"
 import BarChart from '../../components/BarChart';
+import { cn } from '../../utils/util';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -23,17 +24,22 @@ const Dashboard = () => {
   const [tripsSummary, setTripsSummary] = useState({})
   const [usersSummary, setUsersSummary] = useState({})
   const [isLoading, setIsLoading] = useState(true);
-  const [usersChart, setUsersChart] = useState([]);
+  const [bookings, setBookings] = useState([]);
 
   const fetchData = useCallback(async () => {
     try {
       setIsLoading(true);
-      const response = await axiosInstance.get(DASHBOARD_API);
+      // const response = await axiosInstance.get(DASHBOARD_API);
+      const response = await Promise.all([
+        axiosInstance.get(DASHBOARD_API),
+        axiosInstance.get(BOOKING_API),
+      ])
       console.log(response);
-      setTotalNums(response.data.total);
-      setUsersSummary(response.data.data.users);
-      setTripsSummary(response.data.data.trips);
-      setBookingSummary(response.data.data.booking);
+      setBookings(response[1].data.data)
+      setTotalNums(response[0].data.total);
+      setUsersSummary(response[0].data.data.users);
+      setTripsSummary(response[0].data.data.trips);
+      setBookingSummary(response[0].data.data.booking);
     } catch (error) {
       console.log(error.message);
     } finally {
@@ -45,7 +51,7 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  console.log(usersSummary.usersWeekSummary);
+  const bookingTable = ["ID", "User Id", "Trip Id", "Destination", "Status", "Booking Date", "Last Update"]
 
 
   if (isLoading) {
@@ -59,7 +65,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className='relative px-5'>
+    <div className='relative px-5 pr-7'>
       <div className="flex-between w-full flex-col sm:flex-row">
         <Header
           title={`welcom ${user?.name.split(" ")[0]} 👋`}
@@ -109,7 +115,7 @@ const Dashboard = () => {
         <div className="mb-2 ml-2">
           <h2 className="font-recursive font-bold text-lg text-dark-400">Week Activities</h2>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 w-full gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full gap-4">
           <div className="w-full rounded-lg shadow-100 border-ligh-50 border">
             <div className="p-2">
               <h3 className="font-bold text-base text-dark-200 ml-2 capitalize">
@@ -131,7 +137,7 @@ const Dashboard = () => {
               color='#ff543d'
             />
           </div>
-          <div className="w-full col-span-2 md:col-span-1 rounded-lg shadow-100 border-ligh-50 border">
+          <div className="w-full sm:col-span-2 md:col-span-1 rounded-lg shadow-100 border-ligh-50 border">
             <div className="p-2">
               <h3 className="font-bold text-base text-dark-200 ml-2 capitalize">
                 Visual representation of bookings states
@@ -142,6 +148,76 @@ const Dashboard = () => {
               color='#027a48'
             />
           </div>
+        </div>
+      </div>
+
+      <div className="my-7">
+        <div className="ml-2">
+          <h2 className="font-recursive font-bold text-lg text-dark-400">Users Bookings</h2>
+        </div>
+        <div className="w-full overflow-auto">
+          <table className='w-full table-auto border-separate border-spacing-y-1.5 overflow-auto'>
+            <thead>
+              <tr className='bg-dark-400 text-white'>
+                {bookingTable.map((field, i) => (
+                  <th
+                    key={i}
+                    className="py-1.5 px-3 first:rounded-l-lg last:rounded-r-lg font-semibold font-recursive text-sm md:text-base whitespace-nowrap text-start"
+                  >
+                    {field}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+
+            <tbody>
+              {bookings.map((book) => (
+                <tr
+                  key={book._id}
+                  className="odd:bg-slate-200 cursor-pointer duration-2 hover:bg-ligh-50"
+                >
+                  <td className="px-3 py-1 text-sm md:text-base font-karla text-start rounded-l-lg">
+                    {(book._id).slice(0, 7)}
+                  </td>
+                  <td className="px-3 py-1 text-sm md:text-base font-karla text-start">
+                    {(book.user_id._id).slice(0, 7)}
+                  </td>
+                  <td className="px-3 py-1 text-sm md:text-base font-karla text-start">
+                    {(book.trip_id._id).slice(0, 7)}
+                  </td>
+                  <td className="px-3 py-1 text-sm md:text-base font-karla text-start">
+                    {book.trip_id.country}
+                  </td>
+                  <td className="px-3 py-1 text-sm md:text-base font-karla text-start">
+                    <div className={cn(
+                      "px-3 text-white py-1 rounded-full w-fit",
+                      book.status === "confirmed"
+                        ? "bg-green-500"
+                        : book.status === "pending"
+                          ? "bg-yellow-500"
+                          : "bg-red-500"
+                    )}>
+                      {book.status}
+                    </div>
+                  </td>
+                  <td className="px-3 py-1 text-sm md:text-base font-karla text-start">
+                    {new Date(book.booked_at).toLocaleDateString("en-GB", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </td>
+                  <td className="px-3 py-1 text-sm md:text-base font-karla text-start rounded-r-lg">
+                    {new Date(book.updatedAt).toLocaleDateString("en-GB", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 

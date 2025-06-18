@@ -25,11 +25,13 @@ const Dashboard = () => {
   const [usersSummary, setUsersSummary] = useState({})
   const [isLoading, setIsLoading] = useState(true);
   const [bookings, setBookings] = useState([]);
+  const [latestUsers, setLatestUsers] = useState([])
+  const [latestTrips, setLatestTrips] = useState([])
+  const [latestBookings, setLatestBookings] = useState([])
 
   const fetchData = useCallback(async () => {
     try {
       setIsLoading(true);
-      // const response = await axiosInstance.get(DASHBOARD_API);
       const response = await Promise.all([
         axiosInstance.get(DASHBOARD_API),
         axiosInstance.get(BOOKING_API),
@@ -40,6 +42,9 @@ const Dashboard = () => {
       setUsersSummary(response[0].data.data.users);
       setTripsSummary(response[0].data.data.trips);
       setBookingSummary(response[0].data.data.booking);
+      setLatestUsers(response[0].data.latest.users);
+      setLatestTrips(response[0].data.latest.trips);
+      setLatestBookings(response[0].data.latest.bookings);
     } catch (error) {
       console.log(error.message);
     } finally {
@@ -218,6 +223,85 @@ const Dashboard = () => {
               ))}
             </tbody>
           </table>
+        </div>
+      </div>
+
+      <div className="my-7">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="p-2 rounded-md shadow-100 duration-3 hover:shadow-200">
+            <div className="mb-2 ml-2 border-b border-b-ligh-50 pb-1.5">
+              <h2 className="font-bold text-lg main-gradient w-fit special">
+                Latest Users :
+              </h2>
+            </div>
+
+            <div>
+              <div className="mt-2">
+                <div>
+                  {latestUsers.map((user) => (
+                    <div
+                      key={user._id}
+                      className="flex-center gap-1.5 durations-2 hover:bg-ligh-50 px-3 py-1 rounded-lg"
+                    >
+                      <div className="size-9 rounded-full">
+                        <img
+                          src={user.image || "/assets/images/dummy.jpg"}
+                          alt="user img"
+                          className='w-full rounded-full object-cover aspect-square'
+                        />
+                      </div>
+                      <div className="">
+                        <p className="font-karla font-semibold text-dark-200">
+                          {user.name}
+                        </p>
+                        <p className="text-xs text-ligh-200 -mt-0.5">
+                          {user.email}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-2 rounded-md shadow-100 duration-3 hover:shadow-200">
+            <div className="mb-2 ml-2 border-b border-b-ligh-50 pb-1.5">
+              <h2 className="font-bold text-lg main-gradient w-fit special">
+                Latest Trips :
+              </h2>
+            </div>
+            <div className="mt-2">
+              <div>
+                {latestTrips.map((trip) => (
+                  <div
+                    key={trip._id}
+                    className="px-3 py-1 duration-2 flex-between hover:bg-ligh-50 rounded-lg"
+                  >
+                    <div className="flex-center gap-2">
+                      <img
+                        src={trip.images[0]}
+                        alt="trip"
+                        className='size-10 rounded-full object-cover object-center'
+                        loading='lazy'
+                      />
+                      <div>
+                        <p className="font-semibold text-dark-200 font-karla">
+                          {trip.country}
+                        </p>
+                        <p className="text-sm -mt-0.5">
+                          <span className="underline text-primary-400 font-semibold">{trip.duration} days</span> - <span className="text-ligh-200">{trip.groupTypes}</span>
+                        </p>
+                      </div>
+                    </div>
+                    <p className="px-3 py-1 bg-primary-200 text-white rounded-full text-xs">
+                      {trip.price}$
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

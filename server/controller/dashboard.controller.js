@@ -32,7 +32,7 @@ const getLatestData = asyncWrapper(async (req, res) => {
   const latestBookings = await getLatest(Bookings);
   const latestTrips = await getLatest(
     Trips,
-    "_id title duration country groupTypes price"
+    "_id duration country groupTypes images price"
   );
 
   const latest = {

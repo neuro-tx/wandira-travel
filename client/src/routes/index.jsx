@@ -12,8 +12,6 @@ import Travels from '../pages/user/Travels';
 import TravelDetails from '../pages/user/TravelDetails';
 import CreatTrip from '../pages/admin/CreatTrip';
 import AllUsers from '../pages/admin/AllUsers';
-import About from '../pages/user/About';
-import Contact from '../pages/user/Contact';
 import AdminProvider from '../contexts/admin/AdminProvider';
 import AuthLayout from '../layout/AuthLayout';
 import Sign from '../pages/auth/Sign';
@@ -37,9 +35,7 @@ const router = createBrowserRouter([
             { path: 'home', element: <Home /> },
             { path: 'profile', element: <Profile /> },
             { path: 'travels', element: <Travels /> },
-            { path: 'travels/:travelId', element: <TravelDetails /> },
-            { path: "about", element: <About /> },
-            { path: "contact", element: <Contact /> }
+            { path: 'travels/:travelId', element: <TravelDetails /> }
         ]
     },
     {

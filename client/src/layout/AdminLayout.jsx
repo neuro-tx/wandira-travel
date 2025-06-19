@@ -69,13 +69,15 @@ const AdminLayout = () => {
     return (
         <div className='w-full min-h-dvh overflow-x-hidden'>
             {openConfirm && (
-                <ConfirmBox
-                    title="Log out"
-                    description="Are you sure you want to log out? You won't lose any data by logging out."
-                    cancelation={setOpenConfirm}
-                    confrim={handleLogout}
-                    start={start}
-                />
+                <div className="w-full h-full fixed top-0 left-0 z-40">
+                    <ConfirmBox
+                        title="Log out"
+                        description="Are you sure you want to log out? You won't lose any data by logging out."
+                        cancelation={setOpenConfirm}
+                        confrim={handleLogout}
+                        start={start}
+                    />
+                </div>
             )}
             {logoutMess && (
                 <div className="p-5 w-full md:w-fit absolute top-0 bg-gray-900 flex-center justify-center duration-3 z-[999] animated px-10 md:rounded-lg left-1/2 -translate-x-1/2">

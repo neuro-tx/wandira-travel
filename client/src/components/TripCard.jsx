@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router'
 import Button from './Button';
 import { Navigation } from 'lucide-react';
 
-const TripCard = ({ country, city, groupType, image, title, price, interest, style, id ,bookFunc }) => {
+const TripCard = ({ country, city, groupType, image, title, price, interest, style, id, bookFunc }) => {
     const navigate = useNavigate();
     const showTrip = (tripId) => {
         navigate(`/admin/trips/${tripId}`)
@@ -19,6 +19,7 @@ const TripCard = ({ country, city, groupType, image, title, price, interest, sty
                     src={image}
                     alt={`${country}-${interest}`}
                     className="h-full max-w-full w-full object-cover rounded-t-lg"
+                    loading='lazy'
                 />
                 <span className="absolute top-2 right-5 px-3 py-1 bg-white rounded-full text-sm font-semibold text-primary-400 font-karla">
                     {price} $

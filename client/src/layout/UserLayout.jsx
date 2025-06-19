@@ -1,5 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router'
+import Footer from '../components/Footer'
 
 const UserLayout = () => {
   return (
@@ -9,6 +10,7 @@ const UserLayout = () => {
             <main>
                 <Outlet />
             </main>
+            <Footer />
         </div>
     )
 }

@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:5100";
+export const BASE_URL = "https://wandria-server-production.up.railway.app";
 
 // auth apis
 export const LOGIN_API = "/auth/login";

@@ -10,7 +10,7 @@ const TripCard = ({ country, city, groupType, image, title, price, interest, sty
     const { user } = useAuth();
 
     const showTrip = (tripId) => {
-        user.role === "admin" ? navigate(`/admin/trips/${tripId}`) : navigate(`/travels/${tripId}`)
+        user?.role === "admin" ? navigate(`/admin/trips/${tripId}`) : navigate(`/travels/${tripId}`)
     }
 
     return (

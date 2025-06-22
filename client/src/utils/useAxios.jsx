@@ -6,7 +6,7 @@ const useAxios = () => {
     const { token, settoken } = useAuth();
 
     const axiosInstance = axios.create({
-        baseURL: "http://localhost:5100",
+        baseURL: "https://wandria-server-production.up.railway.app",
         // timeout: 20000,
         headers: {
             "Content-Type": "application/json",
@@ -37,7 +37,7 @@ const useAxios = () => {
                 originalRequest._retry = true;
 
                 try {
-                    const refresh = await axios.get("http://localhost:5100/api/refresh", { withCredentials: true });
+                    const refresh = await axios.get("https://wandria-server-production.up.railway.app/api/refresh", { withCredentials: true });
 
                     const newToken = refresh.data.newAccessToken;
                     settoken(refresh.data.newAccessToken);

@@ -46,7 +46,7 @@ const UserLayout = () => {
     return (
         <div className='w-full min-h-screen relative'>
             <header className='absolute z-20 top-0 left-0 w-full'>
-                <div class="flex container mx-auto justify-between items-center px-5 py-4">
+                <div className="flex container mx-auto justify-between items-center px-5 py-4">
                     <Link
                         to="/"
                         className="flex-center gap-1.5 select-none"
@@ -65,7 +65,7 @@ const UserLayout = () => {
                         <img
                             src={user?.image || "/assets/images/dummy.jpg"}
                             alt="Avatar"
-                            class="size-10 rounded-full object-cover"
+                            className="size-10 rounded-full object-cover"
                             loading='lazy'
                         />
 

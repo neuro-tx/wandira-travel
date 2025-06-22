@@ -7,7 +7,6 @@ import Dashboard from '../pages/admin/Dashboard';
 import Trips from '../pages/admin/Trips';
 import TripDetails from '../pages/admin/TripDetails';
 import NotFound from '../components/NotFound';
-import Profile from '../pages/user/Profile';
 import Travels from '../pages/user/Travels';
 import TravelDetails from '../pages/user/TravelDetails';
 import CreatTrip from '../pages/admin/CreatTrip';
@@ -33,7 +32,6 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <Home /> },
             { path: 'home', element: <Home /> },
-            { path: 'profile', element: <Profile /> },
             { path: 'travels', element: <Travels /> },
             { path: 'travels/:travelId', element: <TravelDetails /> }
         ]

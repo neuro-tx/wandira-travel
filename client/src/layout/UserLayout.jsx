@@ -7,7 +7,7 @@ import { useAuth } from '../contexts/shared/Auth';
 import ConfirmBox from '../components/ConfirmBox';
 import { LOG_OUT } from '../apis/api';
 import useAxios from '../utils/useAxios';
-import { CircleX } from 'lucide-react';
+import { CircleX, LogIn } from 'lucide-react';
 
 const UserLayout = () => {
     const { user, logout } = useAuth();
@@ -16,6 +16,7 @@ const UserLayout = () => {
     const axiosInstance = useAxios();
     const navigate = useNavigate();
     const [logoutMess, setlogoutMess] = useState(false);
+    const [open, setopen] = useState(false)
 
 
     const handleLogout = async () => {
@@ -46,7 +47,7 @@ const UserLayout = () => {
     return (
         <div className='w-full min-h-screen relative'>
             <header className='absolute z-20 top-0 left-0 w-full'>
-                <div className="flex container mx-auto justify-between items-center px-5 py-4">
+                <div className="flex container mx-auto justify-between items-center px-5 py-4 relative">
                     <Link
                         to="/"
                         className="flex-center gap-1.5 select-none"
@@ -67,17 +68,49 @@ const UserLayout = () => {
                             alt="Avatar"
                             className="size-10 rounded-full object-cover"
                             loading='lazy'
+                            onMouseEnter={() => setopen(true)}
+                            onMouseLeave={() => setopen(false)}
                         />
 
-                        {user && (
+                        {!user && (
                             <button
-                                class="size-10 rounded-full flex-center justify-center hover:bg-opacity-40 bg-ligh-100/30 duration-2 hover:bg-ligh-100 cursor-pointer"
-                                onClick={() => setOpenConfirm(true)}
+                                className='size-10 rounded-full flex-center justify-center hover:bg-opacity-40 bg-ligh-100/30 duration-2 hover:bg-ligh-100 cursor-pointer'
+                                onClick={() => navigate("/auth/login")}
                             >
-                                <HiArrowLeftStartOnRectangle size={25} color="red" />
+                                <LogIn size={19} color='red' />
                             </button>
                         )}
+
                     </div>
+                    {(user && open) && (
+                        <div className="absolute max-w-xs w-full bg-white shadow-100 p-5 top-16 right-10 z-30 duration-3 rounded-md">
+                            <div className="flex-center justify-between">
+                                <div className="w-full flex-center">
+                                    <img
+                                        src={user?.user.image || "/assets/images/dummy.jpg"}
+                                        alt="profile img"
+                                        className='size-10 rounded-full aspect-square'
+                                    />
+                                    <div className="ml-2">
+                                        <p className="text-primary-400 font-semibold text-lg">
+                                            {user?.user.name}
+                                        </p>
+                                        <p className="text-sm -mt-1 font-karla text-ligh-200">
+                                            {user?.user.email}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="">
+                                    <button
+                                        class="size-10 rounded-full flex-center justify-center hover:bg-opacity-40 bg-ligh-100/30 duration-2 hover:bg-ligh-100 cursor-pointer"
+                                        onClick={() => setOpenConfirm(true)}
+                                    >
+                                        <HiArrowLeftStartOnRectangle size={25} color="red" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </header>
 

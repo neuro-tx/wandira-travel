@@ -63,14 +63,14 @@ const TripCard = ({ country, city, groupType, image, title, price, interest, sty
                     classContainer={"w-full py-3 bg-primary-200 flex-center gap-1.5 text-white rounded-md hover:bg-primary-400 active:bg-primary-300 duration-2 justify-center"}
                     func={() => shotAuthTrip()}
                 />
-                (user && (
-                <Button
-                    title="book trip"
-                    leftIcon={<CircleFadingPlus size={19} />}
-                    classContainer={"w-full py-3 bg-dark-100 flex-center gap-1.5 text-white rounded-md hover:bg-dark-300 active:bg-dark-200 duration-2 justify-center mt-1.5"}
-                    func={() => bookFunc()}
-                />
-                ))
+                {user && (
+                    <Button
+                        title="book trip"
+                        leftIcon={<CircleFadingPlus size={19} />}
+                        classContainer={"w-full py-3 bg-dark-100 flex-center gap-1.5 text-white rounded-md hover:bg-dark-300 active:bg-dark-200 duration-2 justify-center mt-1.5"}
+                        func={() => bookFunc()}
+                    />
+                )}
             </div>
 
         </div>

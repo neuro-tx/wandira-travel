@@ -65,23 +65,21 @@ const UserLayout = () => {
                     </Link>
                     <div className="flex-center gap-3">
                         <img
-                            src={user.image || "/assets/images/dummy.jpg"}
+                            src={user?.image || "/assets/images/dummy.jpg"}
                             alt="Avatar"
                             className="size-10 rounded-full object-cover"
                             loading="lazy"
                             onClick={() => setopen((prev) => !prev)}
                         />
                         {user ? (
-                            <>
-                                {user.role === "admin" && (
-                                    <button
-                                        className="size-10 rounded-full flex-center justify-center hover:bg-opacity-40 bg-ligh-100/30 duration-200 hover:bg-ligh-100 cursor-pointer"
-                                        onClick={() => navigate("/admin/dashboard")}
-                                    >
-                                        <ArrowLeftRight size={19} color="blue" />
-                                    </button>
-                                )}
-                            </>
+                            user.role === "admin" && (
+                                <button
+                                    className="size-10 rounded-full flex-center justify-center hover:bg-opacity-40 bg-ligh-100/30 duration-200 hover:bg-ligh-100 cursor-pointer"
+                                    onClick={() => navigate("/admin/dashboard")}
+                                >
+                                    <ArrowLeftRight size={19} color="blue" />
+                                </button>
+                            )
                         ) : (
                             <button
                                 className="size-10 rounded-full flex-center justify-center hover:bg-opacity-40 bg-ligh-100/30 duration-200 hover:bg-ligh-100 cursor-pointer"
@@ -91,22 +89,23 @@ const UserLayout = () => {
                             </button>
                         )}
 
+
                     </div>
-                    {(user && open) && (
+                    {user && open && (
                         <div className="absolute max-w-xs w-full bg-white shadow-100 p-5 top-16 right-10 z-30 duration-3 rounded-md">
                             <div className="flex-center justify-between">
                                 <div className="w-full flex-center">
                                     <img
-                                        src={user.image || "/assets/images/dummy.jpg"}
+                                        src={user?.image || "/assets/images/dummy.jpg"}
                                         alt="profile img"
                                         className='size-10 rounded-full aspect-square'
                                     />
                                     <div className="ml-2">
                                         <p className="text-primary-400 font-semibold text-lg">
-                                            {user.name}
+                                            {user?.name}
                                         </p>
                                         <p className="text-sm -mt-1 font-karla text-ligh-200">
-                                            {user.email}
+                                            {user?.email}
                                         </p>
                                     </div>
                                 </div>

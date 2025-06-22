@@ -1,4 +1,4 @@
-import { LayoutDashboard, Map, MapPlus, UsersRound } from "lucide-react";
+import { LayoutDashboard, Map, MapPlus, UsersRound ,ArrowRightLeft } from "lucide-react";
 
 export const sidebarIcon = [
   {
@@ -25,28 +25,10 @@ export const sidebarIcon = [
     label: "Generate Trips",
     href: "/admin/create-trip",
   },
-];
-
-export const userLinks = [
   {
-    id: 1,
-    label: "Home",
-    href: "/home",
-  },
-  {
-    id: 2,
-    label: "Travels",
-    href: "/travels",
-  },
-  {
-    id: 3,
-    label: "About Us",
-    href: "/about",
-  },
-  {
-    id: 4,
-    label: "Contact",
-    href: "/contact",
+    id: 5,
+    icon: ArrowRightLeft,
+    label: "User Mode",
+    href: "/",
   },
 ];
-

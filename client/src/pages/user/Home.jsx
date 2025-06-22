@@ -9,6 +9,7 @@ import TripCard from '../../components/TripCard';
 import Popup from '../../components/Popup';
 import Loader from '../../components/loaders/Loader';
 import { cn } from '../../utils/util';
+import Loading from '../../components/loaders/Loading';
 
 
 const Home = () => {
@@ -91,7 +92,7 @@ const Home = () => {
       )}
       {isloading && (
         <div className="fixed top-0 left-0 bg-white w-full h-full z-30">
-          <Loader text="Fetching Data" />
+          <Loading />
         </div>
       )}
       {/*    topic   partition  */}

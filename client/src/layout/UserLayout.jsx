@@ -64,16 +64,15 @@ const UserLayout = () => {
                         </span>
                     </Link>
                     <div className="flex-center gap-3">
+                        <img
+                            src={user.image || "/assets/images/dummy.jpg"}
+                            alt="Avatar"
+                            className="size-10 rounded-full object-cover"
+                            loading="lazy"
+                            onClick={() => setopen((prev) => !prev)}
+                        />
                         {user ? (
                             <>
-                                <img
-                                    src={user.image || "/assets/images/dummy.jpg"}
-                                    alt="Avatar"
-                                    className="size-10 rounded-full object-cover"
-                                    loading="lazy"
-                                    onClick={() => setopen((prev) => !prev)}
-                                />
-
                                 {user.role === "admin" && (
                                     <button
                                         className="size-10 rounded-full flex-center justify-center hover:bg-opacity-40 bg-ligh-100/30 duration-200 hover:bg-ligh-100 cursor-pointer"
@@ -89,15 +88,6 @@ const UserLayout = () => {
                                 onClick={() => navigate("/auth/login")}
                             >
                                 <LogIn size={19} color="red" />
-                            </button>
-                        )}
-
-                        {!user && (
-                            <button
-                                className='size-10 rounded-full flex-center justify-center hover:bg-opacity-40 bg-ligh-100/30 duration-2 hover:bg-ligh-100 cursor-pointer'
-                                onClick={() => navigate("/auth/login")}
-                            >
-                                <LogIn size={19} color='red' />
                             </button>
                         )}
 

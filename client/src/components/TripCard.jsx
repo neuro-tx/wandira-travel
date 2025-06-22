@@ -13,6 +13,10 @@ const TripCard = ({ country, city, groupType, image, title, price, interest, sty
         user?.role === "admin" ? navigate(`/admin/trips/${tripId}`) : navigate(`/travels/${tripId}`)
     }
 
+    const shotAuthTrip = () => {
+        user ? showTrip(id) : navigate("/auth/login")
+    }
+
     return (
         <div
             className='rounded-lg overflow-hidden shadow-400 flex flex-col w-full duration-2 hover:shadow-100'
@@ -57,14 +61,16 @@ const TripCard = ({ country, city, groupType, image, title, price, interest, sty
                     title="show trip details"
                     leftIcon={<Navigation size={19} />}
                     classContainer={"w-full py-3 bg-primary-200 flex-center gap-1.5 text-white rounded-md hover:bg-primary-400 active:bg-primary-300 duration-2 justify-center"}
-                    func={() => showTrip(id)}
+                    func={() => shotAuthTrip()}
                 />
+                (user && (
                 <Button
                     title="book trip"
                     leftIcon={<CircleFadingPlus size={19} />}
                     classContainer={"w-full py-3 bg-dark-100 flex-center gap-1.5 text-white rounded-md hover:bg-dark-300 active:bg-dark-200 duration-2 justify-center mt-1.5"}
                     func={() => bookFunc()}
                 />
+                ))
             </div>
 
         </div>

@@ -1,51 +1,28 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { HiArrowLeftStartOnRectangle } from "react-icons/hi2";
 import { ArrowRight } from "lucide-react";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { useAuth } from '../../contexts/shared/Auth';
 import Button from '../../components/Button';
 import useAxios from '../../utils/useAxios';
-import { BOOKING_API, LOG_OUT, TRIP_API } from '../../apis/api';
+import { BOOKING_API, TRIP_API } from '../../apis/api';
 import TripCard from '../../components/TripCard';
-import ConfirmBox from '../../components/ConfirmBox';
 import Popup from '../../components/Popup';
 import Loader from '../../components/loaders/Loader';
 import { cn } from '../../utils/util';
 
 
 const Home = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const [features, setFeatures] = useState([]);
   const [trips, seTtrips] = useState([]);
   const axiosInstance = useAxios();
   const scrollRef = useRef(null);
   const navigate = useNavigate();
-  const [start, setStart] = useState(false);
-  const [openConfirm, setOpenConfirm] = useState(false);
   const [booking, setbooking] = useState(false);
   const [status, setStatus] = useState({});
   const [loading, setLoading] = useState(false)
   const [isloading, setIsloading] = useState(false)
   const [errorMessage, setErrorMessage] = useState("");
-
-
-  const handleLogout = async () => {
-    setStart(true);
-    try {
-      const response = await axiosInstance.post(LOG_OUT);
-      if (response.data.stateCode) {
-        logout();
-        console.log("loged out")
-        navigate("/auth/login", { replace: true })
-      }
-    } catch (error) {
-      console.error(error);
-      setlogoutMess(true);
-    } finally {
-      setOpenConfirm(false);
-      setStart(false);
-    }
-  }
 
   const bookTrip = async (tripId) => {
     setbooking(false);
@@ -107,17 +84,6 @@ const Home = () => {
           code={status.code}
         />
       )}
-      {openConfirm && (
-        <div className="w-full h-full fixed top-0 left-0 z-40">
-          <ConfirmBox
-            title="Log out"
-            description="Are you sure you want to log out? You won't lose any data by logging out."
-            cancelation={setOpenConfirm}
-            confrim={handleLogout}
-            start={start}
-          />
-        </div>
-      )}
       {loading && (
         <div className="fixed top-0 left-0 bg-black/30 w-full h-full z-30">
           <Loader text="Booking" />
@@ -132,40 +98,6 @@ const Home = () => {
 
       <div className="w-full h-dvh bg-cover bg-center inset-0 backdrop-blur-sm land"
       >
-        <div class="flex container mx-auto justify-between items-center px-5 pt-6">
-          <Link
-            to="/"
-            className="flex-center gap-1.5 select-none"
-          >
-            <img
-              src="/assets/images/logo.svg"
-              alt="logo"
-              width={29}
-              loading='lazy'
-            />
-            <span className="main-gradient text-[21px] capitalize special">
-              wandira
-            </span>
-          </Link>
-          <div className="flex-center gap-3">
-            <img
-              src={user?.image || "/assets/images/dummy.jpg"}
-              alt="Avatar"
-              class="size-10 rounded-full object-cover"
-              loading='lazy'
-            />
-
-            {user && (
-              <button
-                class="size-10 rounded-full flex-center justify-center hover:bg-opacity-40 bg-ligh-100/30 duration-2 hover:bg-ligh-100 cursor-pointer"
-                onClick={() => setOpenConfirm(true)}
-              >
-                <HiArrowLeftStartOnRectangle size={25} color="red" />
-              </button>
-            )}
-          </div>
-        </div>
-
         <div class="flex flex-col justify-center h-full container mx-auto px-5">
           <h1 class="text-5xl md:text-6xl font-bold main-gradient bg-clip-text text-transparent mb-4">
             Plan Your Trip <br /> with Ease
@@ -264,7 +196,7 @@ const Home = () => {
         <div className="flex flex-col items-center gap-6 my-7">
           <div className="w-full container mx-auto flex-center px-4 justify-center">
             <button
-              className={cn("px-7 py-2.5 rounded-lg shadow-400 text-white font-semibold bg-primary-200 hover:bg-primary-400 flex-center gap-1 duration-2 cursor-pointer" ,errorMessage && "opacity-50 pointer-events-none cursor-none")}
+              className={cn("px-7 py-2.5 rounded-lg shadow-400 text-white font-semibold bg-primary-200 hover:bg-primary-400 flex-center gap-1 duration-2 cursor-pointer", errorMessage && "opacity-50 pointer-events-none cursor-none")}
               onClick={() => navigate("/travels")}
             >
               View All <ArrowRight size={16} />

@@ -4,12 +4,6 @@ import { useState } from 'react';
 const userContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const udata = {
-        name: "tarek fawzy",
-        email: "tarek@gmail.com",
-        img: "/assets/images/michael.webp",
-        role: "admin"
-    }
     const [user, setuser] = useState(null);
     const [token, settoken] = useState("");
     const [authoed, setauthoed] = useState(false);

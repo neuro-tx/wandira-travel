@@ -50,7 +50,7 @@ const Login = () => {
         const response = await axiosInstance.post(LOGIN_API, formData);
         login(response.data.data)
 
-        const targetPath = response.data.data.role === "admin" ? '/admin' : '/';
+        const targetPath = response.data.data.role === "admin" ? '/admin/dashboard' : '/';
         if (response.status >= 200 && response.status < 300) {
           navgate(targetPath, { replace: true });
         }

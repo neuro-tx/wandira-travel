@@ -8,7 +8,6 @@ import { TRIP_API } from '../../apis/api';
 import { CalendarRange, MapPin } from 'lucide-react';
 import { cn } from '../../utils/util';
 import Spinear from '../../components/loaders/Spinear';
-// import MapExample from '../../components/LeafletMap';
 import LeafletMap from '../../components/LeafletMap';
 
 const TripDetails = () => {

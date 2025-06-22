@@ -3,11 +3,14 @@ import { CircleFadingPlus, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router'
 import Button from './Button';
 import { Navigation } from 'lucide-react';
+import { useAuth } from '../contexts/shared/Auth';
 
 const TripCard = ({ country, city, groupType, image, title, price, interest, style, id, bookFunc }) => {
     const navigate = useNavigate();
+    const { user } = useAuth();
+
     const showTrip = (tripId) => {
-        navigate(`/admin/trips/${tripId}`)
+        user.role === "admin" ? navigate(`/admin/trips/${tripId}`) : navigate(`/travels/${tripId}`)
     }
 
     return (

@@ -34,7 +34,6 @@ const AdminLayout = () => {
             const response = await axiosInstance.post(LOG_OUT);
             if (response.data.stateCode) {
                 logout();
-                console.log("loged out")
                 navigate("/auth/login", { replace: true })
             }
         } catch (error) {

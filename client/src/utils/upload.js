@@ -11,7 +11,7 @@ const uploadImg = async (file) => {
 
   const authenticator = async () => {
     try {
-      const response = await fetch("http://localhost:5100/auth/image-kit");
+      const response = await fetch("https://wandria-server-production.up.railway.app/auth/image-kit");
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(

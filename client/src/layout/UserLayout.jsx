@@ -36,6 +36,7 @@ const UserLayout = () => {
         }
     }
 
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setlogoutMess(false);
@@ -68,8 +69,7 @@ const UserLayout = () => {
                             alt="Avatar"
                             className="size-10 rounded-full object-cover"
                             loading='lazy'
-                            onMouseEnter={() => setopen(true)}
-                            onMouseLeave={() => setopen(false)}
+                            onClick={()=> setopen((prev) => !prev)}
                         />
 
                         {!user && (

@@ -11,7 +11,7 @@ Wandria is a modern travel and trip management web application...
 
 ## 🌟 Demo
 
-> 🔗 [Live Demo](https://wandira-travel-j1oe1ilv3-tareks-projects-6ede6a66.vercel.app/)  
+> 🔗 [Live Demo](https://wandira-travel.vercel.app/) 
 > 📂 [Frontend Repo](https://github.com/neuro-tx/wandira-travel/tree/main/client)  
 > 🔧 [Backend Repo](https://github.com/neuro-tx/wandira-travel/tree/main/server)
 

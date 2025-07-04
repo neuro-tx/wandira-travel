@@ -24,7 +24,7 @@ const StaticBox = ({ title, count, icon, iconStyle, lastMonth, currentMonth }) =
     const trend = calcPercentage()
 
     return (
-        <div className='p-5 px-4 lg:px-5 bg-white rounded-md shadow-100 hover:shadow-400 duration-2'>
+        <div className='p-5 px-4 lg:px-5 bg-white rounded-md shadow-100 hover:shadow-400 duration-2 overflow-x-hidden'>
             <div className="flex-center gap-1.5">
                 <div className={cn("size-8 flex-center justify-center bg-pink-100 rounded-full aspect-square text-pink-500", iconStyle)}>
                     {icon}
@@ -54,7 +54,7 @@ const StaticBox = ({ title, count, icon, iconStyle, lastMonth, currentMonth }) =
                                     />
                                 )}
                             <span className={cn("font-semibold text-sm", trend.image === "increment" ? "text-green-500 bg-green-50" : "text-red-100 bg-red-50")}>
-                                {trend.percent}%
+                                {(trend.percent).toFixed(2)}%
                             </span>
                         </div>
                         <p className="text-gray-600 font-medium font-karla text-base md:text-sm whitespace-nowrap">

@@ -191,12 +191,12 @@ const AllUsers = () => {
                       {user.email}
                     </td>
                     <td className='py-1 px-3'>
-                      <span className={cn("py-1 px-3 w-fit rounded-full text-white", user.role === "admin" ? "bg-green-500" : "bg-pink-500")}>
+                      <span className={cn("py-1 px-3 w-fit rounded-full", user.role === "admin" ? "text-green-500 bg-green-50" : "text-pink-500 bg-pink-50")}>
                         {user.role}
                       </span>
                     </td>
                     <td className="py-1 px-3">
-                      <span className={cn("py-1 px-3 text-white  rounded-full", user.bookings.length <= 5 ? "bg-rose-500" : "bg-primary-100")}>
+                      <span className={cn("py-1 px-3 rounded-full", user.bookings.length <= 5 ? "text-rose-500 bg-rose-50" : "text-navy-500 bg-navy-50")}>
                         {user.bookings.length}
                       </span>
                     </td>

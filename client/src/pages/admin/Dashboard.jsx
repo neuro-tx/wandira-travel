@@ -162,7 +162,7 @@ const Dashboard = () => {
       </div>
 
       <div className="my-7">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 mlg:grid-cols-2 gap-4">
           <div className="p-2 rounded-md shadow-100 duration-3 hover:shadow-200">
             <div className="mb-2 ml-2 border-b border-b-ligh-50 pb-1.5">
               <h2 className="font-bold text-lg main-gradient w-fit special">
